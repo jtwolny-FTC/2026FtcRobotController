@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-@Autonomous(name = "RedClose", group = "Autonomous")
+@Autonomous(name = "BlueClose", group = "Autonomous")
 @Configurable
 public class RedClose extends LinearOpMode {
     private TelemetryManager panelsTelemetry;
