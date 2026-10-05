@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.ChassisConstants;
 
 public class Constants {
 
-    public static FollowerConstants followerConstants = new FollowerConstants()
+ /*   public static FollowerConstants followerConstants = new FollowerConstants()
             .mass(6.44)
             .forwardZeroPowerAcceleration(-31.0151)
             .lateralZeroPowerAcceleration(-53.9751)
@@ -28,7 +28,7 @@ public class Constants {
             .translationalPIDFCoefficients(new PIDFCoefficients(0.05, 0, 0.01, 0.02))
             .headingPIDFCoefficients(new PIDFCoefficients(0.8, 0, 0.02, 0.02))
             .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.007, 0, 0.0002, 0.2, 0.0005));
-
+*/
     public static MecanumConstants driveConstants = new MecanumConstants()
             .leftFrontMotorName(LEFT_FRONT_MOTOR_NAME)
             .leftRearMotorName(LEFT_REAR_MOTOR_NAME)
@@ -57,13 +57,13 @@ public class Constants {
                     )
             );
 
-    public static PathConstraints pathConstraints = new PathConstraints(
+/*    public static PathConstraints pathConstraints = new PathConstraints(
             0.995,
             500,
             1,
             1
     );
-
+*/
     public static Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
                 .mecanumDrivetrain(driveConstants)
