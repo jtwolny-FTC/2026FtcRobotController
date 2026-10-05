@@ -5,13 +5,11 @@ import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
-import com.pedropathing.paths.Paths;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.pedropathing.ftc.localization.Encoder;
 import com.pedropathing.ftc.localization.constants.TwoWheelConstants;
-import com.pedropathing.paths.PathConstraints;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
