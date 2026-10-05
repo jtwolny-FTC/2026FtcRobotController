@@ -2,10 +2,11 @@ package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 
-import com.pedropathing.control.FilteredPIDFCoefficients;
-import com.pedropathing.control.PIDFCoefficients;
+import com.pedropathing.api.PoseFactory;
+import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
+import com.pedropathing.paths.Paths;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.pedropathing.ftc.localization.Encoder;
