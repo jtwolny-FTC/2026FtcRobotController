@@ -4,9 +4,7 @@ import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierLine;
-import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathChain;
+import com.pedropathing.math.Pose;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -194,39 +192,39 @@ public class BlueClose extends LinearOpMode {
 
         public Paths(Follower follower) {
             scorePreLoad = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(22, 121), new Pose(48, 96)))
+                    .addPath(new Paths.line(new Pose(22, 121), new Pose(48, 96)))
                     .setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(135))
                     .build();
 
             turnPickup1 = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(48, 96), new Pose(45, 84)))
+                    .addPath(new Paths.line(new Pose(48, 96), new Pose(45, 84)))
                     .setLinearHeadingInterpolation(Math.toRadians(138), Math.toRadians(5))
                     .build();
 
             grabPickup1 = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(84, 84), new Pose(127, 84)))
+                    .addPath(new Paths.line(new Pose(84, 84), new Pose(127, 84)))
                     .setLinearHeadingInterpolation(Math.toRadians(5), Math.toRadians(5))
                     .setReversed()
                     .build();
 
             scorePickup1 = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(17, 84), new Pose(48, 96)))
+                    .addPath(new Paths.line(new Pose(17, 84), new Pose(48, 96)))
                     .setLinearHeadingInterpolation(Math.toRadians(5), Math.toRadians(135))
                     .build();
 
             grabPickup2 = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(48, 96), new Pose(32, 71)))
+                    .addPath(new Paths.line(new Pose(48, 96), new Pose(32, 71)))
                     .setLinearHeadingInterpolation(Math.toRadians(135), Math.toRadians(0))
                     .build();
 
             finishPickup2 = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(102, 58), new Pose(134, 58)))
+                    .addPath(new Paths.line(new Pose(102, 58), new Pose(134, 58)))
                     .setTangentHeadingInterpolation()
                     .setReversed()
                     .build();
 
             scorePickup2 = follower.pathBuilder()
-                    .addPath(new BezierLine(new Pose(134, 58), new Pose(84, 84)))
+                    .addPath(new Paths.line(new Pose(134, 58), new Pose(84, 84)))
                     .setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(45))
                     .build();
         }
