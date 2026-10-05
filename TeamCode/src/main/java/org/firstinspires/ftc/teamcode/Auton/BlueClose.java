@@ -5,6 +5,7 @@ import com.bylazar.telemetry.PanelsTelemetry;
 import com.bylazar.telemetry.TelemetryManager;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
+import com.pedropathing.paths.Path;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -187,8 +188,8 @@ public class BlueClose extends LinearOpMode {
     // -----------------------------------------------------
 
     public static class Paths {
-        public PathChain scorePreLoad, turnPickup1, grabPickup1, scorePickup1;
-        public PathChain grabPickup2 , finishPickup2, scorePickup2;
+        public Path scorePreLoad, turnPickup1, grabPickup1, scorePickup1;
+        public Path grabPickup2 , finishPickup2, scorePickup2;
 
         public Paths(Follower follower) {
             scorePreLoad = follower.pathBuilder()
