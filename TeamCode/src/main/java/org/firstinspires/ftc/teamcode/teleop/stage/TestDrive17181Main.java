@@ -168,39 +168,39 @@ public class TestDrive17181Main extends LinearOpMode {
 
         try {
             // DC motors
-            im_intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
-            sm_shootingMotor1 = hardwareMap.get(DcMotorEx.class, "sm1");
-            sm_shootingMotor2 = hardwareMap.get(DcMotorEx.class, "sm2");
-            cb_dcMotor = hardwareMap.get(DcMotorEx.class, "cbMotor");
+           // im_intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+           // sm_shootingMotor1 = hardwareMap.get(DcMotorEx.class, "sm1");
+           //sm_shootingMotor2 = hardwareMap.get(DcMotorEx.class, "sm2");
+           // cb_dcMotor = hardwareMap.get(DcMotorEx.class, "cbMotor");
 
             // Optional servos — try to map; skip if not in config
             try {
                 gb_servo = hardwareMap.get(Servo.class, "sm_servo");
-                gb_hasServo = true;
+                gb_hasServo = false;
             } catch (Exception ignored) { gb_hasServo = false; }
 
             // Directions
-            im_intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-            sm_shootingMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
-            sm_shootingMotor2.setDirection(DcMotorSimple.Direction.FORWARD);
-            cb_dcMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+           // im_intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+           // sm_shootingMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+          //  sm_shootingMotor2.setDirection(DcMotorSimple.Direction.FORWARD);
+          //  cb_dcMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             // Encoders & modes
-            im_intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            sm_shootingMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            sm_shootingMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            cb_dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+           // im_intakeMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+          //  sm_shootingMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+          //  sm_shootingMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+          //  cb_dcMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            im_intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            sm_shootingMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            sm_shootingMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            cb_dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+          //  im_intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+           // sm_shootingMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+          //  sm_shootingMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+          //  cb_dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // Zero power behaviors
-            im_intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            sm_shootingMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            sm_shootingMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            cb_dcMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+           // im_intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+          //  sm_shootingMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+           // sm_shootingMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+          //  cb_dcMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             // Init servo positions/power
             if (gb_hasServo) gb_servo.setPosition(gb_servoPos);
