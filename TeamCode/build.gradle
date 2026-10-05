@@ -31,7 +31,7 @@ dependencies {
     /*Added below code on 10/09/2025 based on https://nextftc.dev/guide/installation*/
     implementation 'dev.nextftc:ftc:1.0.1'
     implementation 'dev.nextftc:hardware:1.0.1' // If you would like to use the hardware module
-
+    implementation "com.pedropathing:revhub:3.0.1"
     implementation 'dev.nextftc.extensions:pedro:1.0.0'
     implementation 'org.ftclib.ftclib:vision:2.1.0' // vision
     implementation 'org.ftclib.ftclib:core:2.1.1' // core
