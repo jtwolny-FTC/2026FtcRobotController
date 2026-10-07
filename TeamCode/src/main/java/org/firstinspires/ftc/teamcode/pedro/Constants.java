@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.ftc.localization.constants.PinpointConstants;
+import com.pedropathing.revhub.drivetrains.MecanumConfig;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
