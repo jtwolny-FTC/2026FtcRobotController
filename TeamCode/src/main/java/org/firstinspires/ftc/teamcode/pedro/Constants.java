@@ -2,18 +2,9 @@ package org.firstinspires.ftc.teamcode.pedro;
 
 import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 
-import com.pedropathing.VectorCalculator;
-import com.pedropathing.control.FilteredPIDFCoefficients;
-import com.pedropathing.control.PIDFCoefficients;
-import com.pedropathing.control.PredictiveBrakingCoefficients;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.ftc.FollowerBuilder;
-import com.pedropathing.ftc.drivetrains.CoaxialPod;
-import com.pedropathing.ftc.drivetrains.SwerveConstants;
 import com.pedropathing.ftc.localization.constants.PinpointConstants;
-import com.pedropathing.geometry.Pose;
-import com.pedropathing.paths.PathConstraints;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
