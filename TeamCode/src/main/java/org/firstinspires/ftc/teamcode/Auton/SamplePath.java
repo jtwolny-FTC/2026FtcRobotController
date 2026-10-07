@@ -20,7 +20,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @Autonomous
-public class SamplePath extends OpMode {
+public class SamplePath extends LinearOpMode {
+    //private TelemetryManager panelsTelemetry;
+    private Follower follower;
+    //private Paths paths;
+    
     @Override
     public void init() {
     }
