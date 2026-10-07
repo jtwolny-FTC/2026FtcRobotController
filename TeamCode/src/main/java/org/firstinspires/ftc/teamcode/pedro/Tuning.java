@@ -13,7 +13,7 @@ public class Tuning {
         return new MecanumTuner();
     }
     public static Procedure tests() {
-        return new Tests(hardwareMap -> new Mecanum(hardwareMap, Constants.drivetrainConfig), null, null);
+        return new Tests(hardwareMap -> new Mecanum(hardwareMap, null), null, null);
     }
     public static Procedure twoWheelTuner() {
         return new TwoWheelTuner();
