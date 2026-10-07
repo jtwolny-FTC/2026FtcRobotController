@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
 public class BlueClose extends LinearOpMode {
     private TelemetryManager panelsTelemetry;
     private Follower follower;
+    private final PoseFactory p = PoseFactory.degrees();
     private Paths paths;
 
     // Motors
