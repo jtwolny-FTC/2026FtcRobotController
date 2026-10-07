@@ -4,6 +4,19 @@ import com.pedropathing.follower.Follower;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Constants {
+
+    public static MecanumConfig driveConfig = new MecanumConfig(
+    c -> {
+        c.frontLeftName.set(LEFT_FRONT_MOTOR_NAME);
+        c.backLeftName.set(LEFT_REAR_MOTOR_NAME);
+        c.frontRightName.set(RIGHT_FRONT_MOTOR_NAME);
+        c.backRightName.set(RIGHT_REAR_MOTOR_NAME);
+        c.frontLeftDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.backLeftDirection.set(DcMotorSimple.Direction.REVERSE);
+        c.frontRightDirection.set(DcMotorSimple.Direction.FORWARD);
+        c.backRightDirection.set(DcMotorSimple.Direction.FORWARD);
+    }
+);
     public static Follower create(HardwareMap h) {
         // return new Follower(Drivetrain, Localizer, Foresight);
         return null;
