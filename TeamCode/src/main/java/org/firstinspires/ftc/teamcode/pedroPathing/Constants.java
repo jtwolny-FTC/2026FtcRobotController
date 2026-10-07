@@ -29,6 +29,10 @@ public class Constants {
             .headingPIDFCoefficients(new PIDFCoefficients(0.8, 0, 0.02, 0.02))
             .drivePIDFCoefficients(new FilteredPIDFCoefficients(0.007, 0, 0.0002, 0.2, 0.0005));
 */
+    public static Follower create(HardwareMap h) {
+        // return new Follower(Drivetrain, Localizer, Foresight);
+        return null;
+    }
     public static MecanumConstants driveConstants = new MecanumConstants()
             .leftFrontMotorName(LEFT_FRONT_MOTOR_NAME)
             .leftRearMotorName(LEFT_REAR_MOTOR_NAME)
