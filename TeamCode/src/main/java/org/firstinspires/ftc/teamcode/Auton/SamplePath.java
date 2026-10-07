@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @Autonomous
-public class ExampleAuto extends OpMode {
+public class SamplePath extends OpMode {
     @Override
     public void init() {
     }
