@@ -34,7 +34,7 @@ public class BlueClose extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
-        follower = Constants.createFollower(hardwareMap);
+        follower = Constants.create(hardwareMap);
         follower.setStartingPose(new Pose(22, 121, Math.toRadians(140)));
 
         // Path generation
