@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 // These are the “subsystems” — little robot parts that do special jobs
 import org.firstinspires.ftc.teamcode.subsystems.BallLoadingServo;
-import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeServo;
 import org.firstinspires.ftc.teamcode.subsystems.ShootingDirectionServo;
 import org.firstinspires.ftc.teamcode.subsystems.ShootingSystem;
 
@@ -34,14 +34,14 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
     private ShootingSystem shootingSystem;
     private ShootingDirectionServo shootingDirectionServo;
     private BallLoadingServo ballLoadingServo;
-    private Intake intakeSystem;
+    private IntakeServo intakeSystem;
 
     // This is the "constructor" — runs once when the program starts loading
     public RobotCentricTeleOp() {
 
         // We connect our subsystems to the robot and give them access to telemetry (data shown on driver station)
         shootingSystem = ShootingSystem.getInstance(telemetry);
-        intakeSystem = Intake.getInstance(telemetry);
+        intakeSystem = IntakeServo.getInstance(telemetry);
         shootingDirectionServo = ShootingDirectionServo.getInstance(telemetry);
         ballLoadingServo = BallLoadingServo.getInstance(telemetry);
 
