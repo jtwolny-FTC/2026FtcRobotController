@@ -6,22 +6,22 @@ import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.CRServoEx;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class Intake implements Subsystem {
+public class IntakeServo implements Subsystem {
 
-    private static Intake INSTANCE = null;
+    private static IntakeServo INSTANCE = null;
     private Telemetry telemetry;
-    private Intake(Telemetry telemetry) {
+    private IntakeServo(Telemetry telemetry) {
         this.telemetry = telemetry;
     }
-    public static Intake getInstance(Telemetry telemetry) {
+    public static IntakeServo getInstance(Telemetry telemetry) {
         if (INSTANCE == null) {
-            INSTANCE = new Intake(telemetry);
+            INSTANCE = new IntakeServo(telemetry);
         }
         return INSTANCE;
     }
-    public static Intake getInstance() {
+    public static IntakeServo getInstance() {
         if (INSTANCE == null) {
-            throw new NullPointerException("Intake subsystem is not initialized yet");
+            throw new NullPointerException("IntakeServo subsystem is not initialized yet");
         }
         return INSTANCE;
     }
