@@ -58,7 +58,10 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
 
     @Override
     public void onStartButtonPressed() {
-
+        
+        telemetry.addLine("START BUTTON PRESSED");
+        telemetry.update();
+        
         Command driverControlled = new MecanumDriverControlled(
                 frontLeftMotor,
                 frontRightMotor,
