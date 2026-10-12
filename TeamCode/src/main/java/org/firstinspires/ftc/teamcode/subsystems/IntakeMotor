@@ -72,6 +72,8 @@ public class IntakeMotor implements Subsystem {
                 intakeMotor.getPower());
 
         telemetry.addData(
-                "Position",
+                "Velocity",
                 "%.2f",
-                intakeMotor.
+                intakeMotor.getVelocity());
+    }
+}
