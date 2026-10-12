@@ -30,20 +30,20 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
     //private ShootingDirectionServo shootingDirectionServo;
     private BallLoadingServo ballLoadingServo;
     private IntakeServo intakeSystem;
-    private IntakeMotor intakeMotor;
+    private IntakeMotor intakeFeed;
 
     public RobotCentricTeleOp() {
 
         shootingSystem = ShootingSystem.getInstance(telemetry);
         intakeSystem = IntakeServo.getInstance(telemetry);
-        intakeMotor = IntakeMotor.getInstance(telemetry);
+        intakeFeed = IntakeMotor.getInstance(telemetry);
         //shootingDirectionServo = ShootingDirectionServo.getInstance(telemetry);
         ballLoadingServo = BallLoadingServo.getInstance(telemetry);
 
         addComponents(
                 new SubsystemComponent(shootingSystem),
                 new SubsystemComponent(intakeSystem),
-                new SubsystemComponent(intakeMotor),
+                new SubsystemComponent(intakeFeed),
                 //new SubsystemComponent(shootingDirectionServo),
                 new SubsystemComponent(ballLoadingServo),
                 BulkReadComponent.INSTANCE,
@@ -60,7 +60,7 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
     public void onStartButtonPressed() {
         
         telemetry.addLine("START BUTTON PRESSED");
-        telemetry.addData("IntakeMotor", intakeMotor != null);
+        telemetry.addData("IntakeMotor", intakeFeed != null);
         telemetry.addData("IntakeServo", intakeSystem != null);
         telemetry.addData("Shooter", shootingSystem != null);
         telemetry.update();
@@ -99,10 +99,10 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
         // NEW Intake Motor Controls
 
         Gamepads.gamepad2().leftStickButton()
-                .whenBecomesTrue(intakeMotor.startStop);
+                .whenBecomesTrue(intakeFeed.startStop);
 
         Gamepads.gamepad2().rightStickButton()
-                .whenBecomesTrue(intakeMotor.reverse);
+                .whenBecomesTrue(intakeFeed.reverse);
 
         // Stop Everything
 
