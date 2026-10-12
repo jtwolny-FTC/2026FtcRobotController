@@ -60,6 +60,9 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
     public void onStartButtonPressed() {
         
         telemetry.addLine("START BUTTON PRESSED");
+        telemetry.addData("IntakeMotor", intakeMotor != null);
+        telemetry.addData("IntakeServo", intakeSystem != null);
+        telemetry.addData("Shooter", shootingSystem != null);
         telemetry.update();
         
         Command driverControlled = new MecanumDriverControlled(
