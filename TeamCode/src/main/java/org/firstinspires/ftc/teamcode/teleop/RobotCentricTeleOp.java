@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.subsystems.BallLoadingServo;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeServo;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeMotor;
-import org.firstinspires.ftc.teamcode.subsystems.ShootingDirectionServo;
+//import org.firstinspires.ftc.teamcode.subsystems.ShootingDirectionServo;
 import org.firstinspires.ftc.teamcode.subsystems.ShootingSystem;
 
 import dev.nextftc.core.commands.Command;
@@ -27,7 +27,7 @@ import dev.nextftc.hardware.impl.MotorEx;
 public class RobotCentricTeleOp extends NextFTCOpMode {
 
     private ShootingSystem shootingSystem;
-    private ShootingDirectionServo shootingDirectionServo;
+    //private ShootingDirectionServo shootingDirectionServo;
     private BallLoadingServo ballLoadingServo;
     private IntakeServo intakeSystem;
     private IntakeMotor intakeMotor;
@@ -37,14 +37,14 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
         shootingSystem = ShootingSystem.getInstance(telemetry);
         intakeSystem = IntakeServo.getInstance(telemetry);
         intakeMotor = IntakeMotor.getInstance(telemetry);
-        shootingDirectionServo = ShootingDirectionServo.getInstance(telemetry);
+        //shootingDirectionServo = ShootingDirectionServo.getInstance(telemetry);
         ballLoadingServo = BallLoadingServo.getInstance(telemetry);
 
         addComponents(
                 new SubsystemComponent(shootingSystem),
                 new SubsystemComponent(intakeSystem),
                 new SubsystemComponent(intakeMotor),
-                new SubsystemComponent(shootingDirectionServo),
+                //new SubsystemComponent(shootingDirectionServo),
                 new SubsystemComponent(ballLoadingServo),
                 BulkReadComponent.INSTANCE,
                 BindingsComponent.INSTANCE
