@@ -10,10 +10,10 @@ public class IntakeMotor implements Subsystem {
 
     private static IntakeMotor INSTANCE = null;
 
-    private Telemetry telemetry;
+    private final Telemetry telemetry;
 
     // Motor name from Robot Configuration
-    private MotorEx intakeMotor = new MotorEx("intakeMotor");
+    private final MotorEx intakeMotor = new MotorEx("intakeMotor");
 
     private static final double INTAKE_POWER = 1.0;
     private static final double REVERSE_POWER = -1.0;
@@ -39,21 +39,33 @@ public class IntakeMotor implements Subsystem {
     }
 
     /**
-     * Toggle intake motor on/off
+     * Forward / Stop toggle
      */
-    public Command startStop = new InstantCommand(() -> {
-        if (Math.abs(intakeMotor.getPower()) < 0.1) {
-            intakeMotor.setPower(INTAKE_POWER);
-        } else {
+    public final Command startStop = new InstantCommand(() -> {
+
+        if (intakeMotor.getPower() > 0.1) {
+            // Already running forward -> stop
             intakeMotor.setPower(STOP_POWER);
+        } else {
+            // Stopped or reversing -> run forward
+            intakeMotor.setPower(INTAKE_POWER);
         }
+
     }).requires(this);
 
     /**
-     * Reverse the intake motor
+     * Reverse / Stop toggle
      */
-    public Command reverse = new InstantCommand(() -> {
-        intakeMotor.setPower(REVERSE_POWER);
+    public final Command reverse = new InstantCommand(() -> {
+
+        if (intakeMotor.getPower() < -0.1) {
+            // Already running reverse -> stop
+            intakeMotor.setPower(STOP_POWER);
+        } else {
+            // Stopped or running forward -> reverse
+            intakeMotor.setPower(REVERSE_POWER);
+        }
+
     }).requires(this);
 
     /**
@@ -65,7 +77,9 @@ public class IntakeMotor implements Subsystem {
 
     @Override
     public void periodic() {
+
         telemetry.addData("<===== Intake Motor =====>", "");
+
         telemetry.addData(
                 "Power",
                 "%.2f",
@@ -75,5 +89,11 @@ public class IntakeMotor implements Subsystem {
                 "Velocity",
                 "%.2f",
                 intakeMotor.getVelocity());
+
+        telemetry.addData(
+                "State",
+                intakeMotor.getPower() > 0.1 ? "FORWARD"
+                        : intakeMotor.getPower() < -0.1 ? "REVERSE"
+                        : "STOPPED");
     }
 }
