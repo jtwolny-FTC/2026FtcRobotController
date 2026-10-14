@@ -78,8 +78,12 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
         driverControlled.schedule();
 
         // Shooter Controls
+        // round buttons x,y,a,b
+        // dpadUp,dpadDown,dpadLeft,dpadRight
+        // leftBumper,rightBumper leftTrigger & rightTrigger
+        // leftStickButton,rightStickButton
 
-        Gamepads.gamepad2().x()
+        Gamepads.gamepad2().a()
                 .whenBecomesTrue(shootingSystem.startStop);
 
         Gamepads.gamepad2().leftBumper()
@@ -90,10 +94,10 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
 
         // Intake Servo Controls
 
-        Gamepads.gamepad2().a()
+        Gamepads.gamepad2().x()
                 .whenBecomesTrue(intakeSystem.startStop);
 
-        Gamepads.gamepad2().b()
+        Gamepads.gamepad2().y()
                 .whenBecomesTrue(intakeSystem.reverse);
 
         // NEW Intake Motor Controls
