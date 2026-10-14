@@ -51,10 +51,10 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
         );
     }
 
-    private final MotorEx frontLeftMotor = new MotorEx(LEFT_FRONT_MOTOR_NAME);
-    private final MotorEx frontRightMotor = new MotorEx(RIGHT_FRONT_MOTOR_NAME).reversed();
-    private final MotorEx backLeftMotor = new MotorEx(LEFT_REAR_MOTOR_NAME);
-    private final MotorEx backRightMotor = new MotorEx(RIGHT_REAR_MOTOR_NAME).reversed();
+    private final MotorEx frontLeftMotor = new MotorEx(LEFT_FRONT_MOTOR_NAME).reversed();
+    private final MotorEx frontRightMotor = new MotorEx(RIGHT_FRONT_MOTOR_NAME);
+    private final MotorEx backLeftMotor = new MotorEx(LEFT_REAR_MOTOR_NAME).reversed();
+    private final MotorEx backRightMotor = new MotorEx(RIGHT_REAR_MOTOR_NAME);
 
     @Override
     public void onStartButtonPressed() {
