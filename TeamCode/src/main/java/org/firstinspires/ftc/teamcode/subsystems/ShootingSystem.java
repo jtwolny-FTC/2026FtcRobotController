@@ -45,8 +45,8 @@ public class ShootingSystem implements Subsystem {
     
     // Power levels for different shooting states
     private static final double LOW_THRESHOLD = 0.25;
-    private static final double MID_POWER = 0.57;
-    private static final double HIGH_POWER = 0.70;
+    private static final double MID_POWER = 0.65;
+    private static final double HIGH_POWER = 1.0;
     private static final double STOP_POWER = 0.0;
 
     private static final double SHOOTING_PWR_INCREMENT = 0.05;
