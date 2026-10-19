@@ -57,7 +57,7 @@ public class IntakeMotor implements Subsystem {
      * Forward Only
      */
     public final Command forward = new InstantCommand(() -> {
-        intakeMotor.setPower(INTAKE_POWER);
+        start();
     }).requires(this);
 
     /**
@@ -65,6 +65,13 @@ public class IntakeMotor implements Subsystem {
      */
     public final Command reverse = new InstantCommand(() -> {
         intakeMotor.setPower(REVERSE_POWER);
+    }).requires(this);
+
+    /**
+     * Turn Motor Off
+     */
+    public final Command off = new InstantCommand(() -> {
+        stop();
     }).requires(this);
 
     /**
