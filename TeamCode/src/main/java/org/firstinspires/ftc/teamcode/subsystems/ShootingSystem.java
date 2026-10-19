@@ -73,6 +73,22 @@ public class ShootingSystem implements Subsystem {
     }).requires(this);
 
     /**
+     * Turn shooter on
+     */
+    public final Command on = new InstantCommand(() -> {
+        if (shootingMotor.getPower() < MID_POWER) {
+            shootingMotor.setPower(MID_POWER);
+        } 
+    }).requires(this);
+
+    /**
+     * Turn shooter Off
+     */
+    public final Command off = new InstantCommand(() -> {
+        shootingMotor.setPower(STOP_POWER);
+    }).requires(this);
+
+    /**
      * Toggle between medium and high power.
      */
     public Command toggleShootingPower = new InstantCommand(() -> {
