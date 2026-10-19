@@ -91,7 +91,7 @@ currentPower = REVERSE_POWER;
 /**
 * Turn Intake Off
 */
-public final Command Off = new InstantCommand(() -> {
+public final Command off = new InstantCommand(() -> {
 setIntakePower(STOP_POWER);
 currentPower = STOP_POWER;
 }).requires(this);
