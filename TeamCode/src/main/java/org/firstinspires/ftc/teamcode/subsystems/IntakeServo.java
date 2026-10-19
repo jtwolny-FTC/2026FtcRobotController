@@ -73,22 +73,25 @@ currentPower = INTAKE_POWER;
 }).requires(this);
 
 /**
-* Reverse / Stop toggle
-*
-* Stopped -> Reverse
-* Reverse -> Stop
-* Forward -> Reverse
+* Start Intake Forward
+*/
+public final Command forward = new InstantCommand(() -> {
+start();
+}).requires(this);
+  
+/**
+* Start Intake Reverse
 */
 public final Command reverse = new InstantCommand(() -> {
-
-if (currentPower < -0.1) {
-setIntakePower(STOP_POWER);
-currentPower = STOP_POWER;
-} else {
 setIntakePower(REVERSE_POWER);
 currentPower = REVERSE_POWER;
-}
+}).requires(this);
 
+/**
+* Turn Intake Off
+*/
+public final Command Off = new InstantCommand(() -> {
+stop();
 }).requires(this);
 
   /**
