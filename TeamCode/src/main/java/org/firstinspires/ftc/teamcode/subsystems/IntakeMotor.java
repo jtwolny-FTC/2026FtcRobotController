@@ -69,9 +69,16 @@ public class IntakeMotor implements Subsystem {
     }).requires(this);
 
     /**
+     * Start the intake motor
+     */
+    public final void start() {
+        intakeMotor.setPower(INTAKE_POWER);
+    }
+    
+    /**
      * Stop the intake motor
      */
-    public void stop() {
+    public final void stop() {
         intakeMotor.setPower(STOP_POWER);
     }
 
