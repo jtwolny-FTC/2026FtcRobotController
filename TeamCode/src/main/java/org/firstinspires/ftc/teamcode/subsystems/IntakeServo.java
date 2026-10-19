@@ -76,7 +76,8 @@ currentPower = INTAKE_POWER;
 * Start Intake Forward
 */
 public final Command forward = new InstantCommand(() -> {
-start();
+setIntakePower(INTAKE_POWER);
+currentPower = INTAKE_POWER;
 }).requires(this);
   
 /**
@@ -91,7 +92,8 @@ currentPower = REVERSE_POWER;
 * Turn Intake Off
 */
 public final Command Off = new InstantCommand(() -> {
-stop();
+setIntakePower(STOP_POWER);
+currentPower = STOP_POWER;
 }).requires(this);
 
   /**
