@@ -91,10 +91,18 @@ currentPower = REVERSE_POWER;
 
 }).requires(this);
 
+  /**
+* Start intake.
+*/
+public final void start() {
+setIntakePower(INTAKE_POWER);
+currentPower = INTAKE_POWER;
+}
+  
 /**
 * Stop intake.
 */
-public void stop() {
+public final void stop() {
 setIntakePower(STOP_POWER);
 currentPower = STOP_POWER;
 }
