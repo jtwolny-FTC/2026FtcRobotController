@@ -54,18 +54,17 @@ public class IntakeMotor implements Subsystem {
     }).requires(this);
 
     /**
-     * Reverse / Stop toggle
+     * Forward Only
+     */
+    public final Command forward = new InstantCommand(() -> {
+        intakeMotor.setPower(INTAKE_POWER);
+    }).requires(this);
+
+    /**
+     * Reverse Only
      */
     public final Command reverse = new InstantCommand(() -> {
-
-        if (intakeMotor.getPower() < -0.1) {
-            // Already running reverse -> stop
-            intakeMotor.setPower(STOP_POWER);
-        } else {
-            // Stopped or running forward -> reverse
-            intakeMotor.setPower(REVERSE_POWER);
-        }
-
+        intakeMotor.setPower(REVERSE_POWER);
     }).requires(this);
 
     /**
