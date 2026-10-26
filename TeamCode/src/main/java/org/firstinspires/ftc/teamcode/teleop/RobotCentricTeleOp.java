@@ -133,10 +133,10 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
 
         // Shooter Angle
 
-//        Gamepads.gamepad2().dpadUp()
+//        Gamepads.gamepad2().leftTrigger()
 //                .whenBecomesTrue(shootingDirectionServo.downShootingServo);
 
-//        Gamepads.gamepad2().dpadDown()
+//        Gamepads.gamepad2().rightTrigger()
 //                .whenBecomesTrue(shootingDirectionServo.upShootingServo);
     }
 }
