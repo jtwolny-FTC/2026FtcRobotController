@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import dev.nextftc.core.commands.Command;
-import dev.nextftc.core.commands.groups.SequentialCommandGroup;
 import dev.nextftc.core.commands.utility.InstantCommand;
-import dev.nextftc.core.commands.utility.WaitCommand;
 import dev.nextftc.core.subsystems.Subsystem;
 import dev.nextftc.hardware.impl.CRServoEx;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -34,7 +32,11 @@ public class BallLoadingServo implements Subsystem {
     private Telemetry telemetry;
 
     // Adjust this value until the servo rotates 180 degrees
-    private static final int HALF_TURN_TIME_MS = 500;
+    private static final long HALF_TURN_TIME_MS = 500;
+
+    // Other variables needed for the Half Turn
+    private boolean advancing = false;
+    private long stopTime = 0;
 
     /**
      * This sets up the servo and telemetry system.
@@ -87,18 +89,15 @@ public class BallLoadingServo implements Subsystem {
      * then stop automatically.
      * must set & calibrate half turn time
      */
-    public final Command advanceHalfTurn =
-            new SequentialCommandGroup(
-                    new InstantCommand(() -> {
-                        currentPower = 1.0;
-                        crServo.setPower(currentPower);
-                    }),
-                    new WaitCommand(HALF_TURN_TIME_MS),
-                    new InstantCommand(() -> {
-                        currentPower = 0.0;
-                        crServo.setPower(currentPower);
-                    })
-            ).requires(this);
+    public final Command advanceHalfTurn = new InstantCommand(() -> {
+    if (!advancing) {
+        currentPower = 1.0;
+        crServo.setPower(currentPower);
+        stopTime = System.currentTimeMillis() + HALF_TURN_TIME_MS;
+        advancing = true;
+        }
+    }).requires(this);
+    
     /**
      * Spins the servo forward (positive direction) at a chosen speed.
      */
@@ -155,6 +154,12 @@ public class BallLoadingServo implements Subsystem {
         // Show a friendly word for the direction
         String status = currentPower > 0 ? "Forward" :
                 currentPower < 0 ? "Backward" : "Stopped";
+        // Index Advance Time Reset
         telemetry.addData("Status", status);
+            if (advancing && System.currentTimeMillis() >= stopTime) {
+        currentPower = 0.0;
+        crServo.setPower(0.0);
+        advancing = false;
+        }
     }
 }
