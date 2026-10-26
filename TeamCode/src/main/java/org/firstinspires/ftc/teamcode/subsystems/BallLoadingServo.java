@@ -149,12 +149,12 @@ public class BallLoadingServo implements Subsystem {
     @Override
     public void periodic() {
         telemetry.addData("<===== Ball Loading Servo =====>", "");
-        telemetry.addData("CR Power", "%.2f", currentPower);
+        telemetry.addData("Power", "%.2f", currentPower);
         telemetry.addData("Half Turn Time (ms)",HALF_TURN_TIME_MS);
         
         // Show a friendly word for the direction
         String status = currentPower > 0 ? "Forward" :
                 currentPower < 0 ? "Backward" : "Stopped";
-        telemetry.addData("CR Status", status);
+        telemetry.addData("Status", status);
     }
 }
