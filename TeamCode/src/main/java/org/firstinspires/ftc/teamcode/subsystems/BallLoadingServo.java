@@ -105,22 +105,30 @@ public class BallLoadingServo implements Subsystem {
     /**
      * Spins the servo forward (positive direction) at a chosen speed.
      */
+    
     public Command runForward(double power) {
-        return setContinuousPower(Math.abs(power));
-    }
 
+        return new InstantCommand(() -> {
+        if (!ShootingSystem.getInstance().isRunning()) {
+            return;
+        }
+        currentPower = -Math.abs(power);
+        crServo.setPower(currentPower);
+    }).requires(this);
+    }
+    
     /**
      * Spins the servo forward at full speed.
      */
     public Command runForward() {
-        return runForward(1.0);
+        return runForward(-1.0);
     }
 
     /**
      * Spins the servo backward (negative direction) at a chosen speed.
      */
     public Command runBackward(double power) {
-        return setContinuousPower(-Math.abs(power));
+        return setContinuousPower(Math.abs(power));
     }
 
     /**
