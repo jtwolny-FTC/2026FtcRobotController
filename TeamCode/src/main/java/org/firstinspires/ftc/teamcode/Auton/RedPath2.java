@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auton;
 
-import static com.pedropathing.api.Paths.*;
+import static com.pedropathing.api.Paths;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
