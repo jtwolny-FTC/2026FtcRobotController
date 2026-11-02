@@ -37,25 +37,32 @@ public class BluePath1 extends OpMode {
     private final Pose parkControl1 = poseFactory.of(99.5612, 78.5075, 0);
 
     // Path methods
-    public Path shooting1() {
-        return Paths.line(startPose, shooting1).linear(start, shooting1);
+    public Path shootingPath() {
+        return Paths.line(startPose, shooting1).linear(startPose, shooting1);
     }
 
-    public Path garden() {
+    public Path gardenPath() {
         return Paths.curve(gardenStart, gardenControl1, garden).linear(gardenStart, garden);
     }
 
-    public Path park() {
+    public Path parkPath() {
         return Paths.curve(parkStart, parkControl1, park).linear(parkStart, park);
     }
     
-    private Command autoRoutine() {
-        return sequential(
-                follow(follower, shooting1()),
-                follow(follower, garden()),
-                follow(follower, park())
-               );
-    }
+private Command autoRoutine() {
+    return sequential(
+            follow(follower, shootingPath()),
+            shootingSystem.on,
+            waitMs(2000),
+            ballLoadingServo.advanceHalfTurn,
+            waitMs(1500),
+            ballLoadingServo.advanceHalfTurn,
+            waitMs(1500),
+            shootingSystem.off,
+            follow(follower, gardenPath()),
+            follow(follower, parkPath())       
+    );
+}
 
     @Override
     public void init() {
