@@ -32,27 +32,33 @@ public class BluePath1 extends OpMode {
     private Follower follower;
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
+    // Subsystems
+    private ShootingSystem shootingSystem;
+    private BallLoadingServo ballLoadingServo;
+    private IntakeServo intakeSystem;
+    private IntakeMotor intakeFeed;
+    
     // Poses
     private final Pose startPose = poseFactory.of(82.9111, 133.5555, 270);
-    private final Pose shooting1 = poseFactory.of(82.8036, 119.8316, 270);
+    private final Pose shootingPose = poseFactory.of(82.8036, 119.8316, 270);
     private final Pose gardenStart = poseFactory.of(82.8036, 119.8316, 270);
-    private final Pose garden = poseFactory.of(134.3023, 133.4371, 270);
+    private final Pose gardenPose = poseFactory.of(134.3023, 133.4371, 270);
     private final Pose gardenControl1 = poseFactory.of(134.2398, 97.3394, 0);
     private final Pose parkStart = poseFactory.of(134.3023, 133.4371, 270);
-    private final Pose park = poseFactory.of(132.3693, 44.1264, 0);
+    private final Pose parkPose = poseFactory.of(132.3693, 44.1264, 0);
     private final Pose parkControl1 = poseFactory.of(99.5612, 78.5075, 0);
 
     // Path methods
     public Path shootingPath() {
-        return Paths.line(startPose, shooting1).linear(startPose, shooting1);
+        return Paths.line(startPose, shootingPose).linear(startPose, shootingPose);
     }
 
     public Path gardenPath() {
-        return Paths.curve(gardenStart, gardenControl1, garden).linear(gardenStart, garden);
+        return Paths.curve(gardenStart, gardenControl1, gardenPose).linear(gardenStart, gardenPose);
     }
 
     public Path parkPath() {
-        return Paths.curve(parkStart, parkControl1, park).linear(parkStart, park);
+        return Paths.curve(parkStart, parkControl1, parkPose).linear(parkStart, parkPose);
     }
     
 private Command autoRoutine() {
