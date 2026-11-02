@@ -22,57 +22,31 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @Autonomous
-public class SamplePath extends OpMode {
+public class RedPath2 extends OpMode {
     private Follower follower;
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    // Start Point
-    private final Pose startPose    = poseFactory.of(55, 8.5, 90);
-
-    // Segment 1 (Curve points - control point assigned 0 heading)
-    private final Pose path1Start   = poseFactory.of(23.641, 23.000, 90);
-    private final Pose path1Control = poseFactory.of(17.793, 64.745, 0); // Heading placeholder (ignored by curve geometry)
-    private final Pose path1End     = poseFactory.of(9.945, 104.490, 90);
-
-    // Heading anchors for the curve's linear interpolation (44 to 90 degrees)
-    private final Pose headingStart = poseFactory.of(0, 0, 44);
-    private final Pose headingEnd   = poseFactory.of(0, 0, 90);
-
-    // Segments 2 & 3 Target Poses
-    private final Pose path2End     = poseFactory.of(53.927, 124.349, 90);
-    private final Pose path3End     = poseFactory.of(117.568, 125.196, 90);
-
+    // Poses
+    private final Pose start = poseFactory.of(82.75, 7.75, 90);
+    private final Pose shooting1 = poseFactory.of(82.75, 28.75, 90);
+    private final Pose parkStart = poseFactory.of(82.75, 28.75, 90);
+    private final Pose park = poseFactory.of(133.75, 25.75, 0);
+    private final Pose parkControl1 = poseFactory.of(91.75, 19.75, 0);
 
     // Path methods
-// Connects your new start point to the beginning of your original path
-    private Path initialConnect() {
-        return line(startPose, path1Start).tangent();
+    public Path shooting1() {
+        return Paths.line(start, shooting1).linear(start, shooting1);
     }
 
-    // Segment 1: The original BezierCurve with linear heading interpolation
-    private Path segment1Curve() {
-        return curve(path1Start, path1Control, path1End).linear(headingStart, headingEnd);
+    public Path park() {
+        return Paths.curve(parkStart, parkControl1, park).linear(parkStart, park);
     }
-
-    // Segment 2: The first tangent BezierLine
-    private Path segment2Line() {
-        return line(path1End, path2End).tangent();
-    }
-
-// Segment 3: The second tangent BezierLine, driven in reverse
-    private Path segment3Line() {
-        return line(path2End, path3End)
-                .reverseTangent();
-    }
-
-
+    
     private Command autoRoutine() {
         return sequential(
-                follow(follower, initialConnect()),
-                follow(follower, segment1Curve()),
-                follow(follower, segment2Line()),
-                follow(follower, segment3Line() ) // Driven in reverse
-        );
+                follow(follower, shooting1()),
+                follow(follower, park())
+               );
     }
 
     @Override
