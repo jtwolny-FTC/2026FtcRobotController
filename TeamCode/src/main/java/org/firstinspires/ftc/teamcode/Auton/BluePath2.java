@@ -1,9 +1,15 @@
 package org.firstinspires.ftc.teamcode.Auton;
 
+import org.firstinspires.ftc.teamcode.subsystems.ShootingSystem;
+import org.firstinspires.ftc.teamcode.subsystems.BallLoadingServo;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeServo;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeMotor;
+
 import static com.pedropathing.api.Paths.*;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
+import static com.pedropathing.ivy.commands.Commands.waitMs;
 
 import com.bylazar.configurables.annotations.Configurable;
 import com.bylazar.telemetry.PanelsTelemetry;
@@ -22,36 +28,55 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 @Autonomous
-public class BluePath2 extends OpMode {
+public class BluePath1 extends OpMode {
     private Follower follower;
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
+    // Subsystems
+    private ShootingSystem shootingSystem;
+    private BallLoadingServo ballLoadingServo;
+    private IntakeServo intakeSystem;
+    private IntakeMotor intakeFeed;
+    
     // Poses
-    private final Pose start = poseFactory.of(82.75, 7.75, 90);
-    private final Pose shooting1 = poseFactory.of(82.75, 28.75, 90);
+    private final Pose startPose = poseFactory.of(82.75, 7.75, 90);
+    private final Pose shootingPose = poseFactory.of(82.75, 28.75, 90);
     private final Pose parkStart = poseFactory.of(82.75, 28.75, 90);
-    private final Pose park = poseFactory.of(133.75, 25.75, 0);
+    private final Pose parkPose = poseFactory.of(133.75, 25.75, 0);
     private final Pose parkControl1 = poseFactory.of(91.75, 19.75, 0);
 
     // Path methods
-    public Path shooting1() {
-        return Paths.line(start, shooting1).linear(start, shooting1);
+    public Path shootingPath() {
+        return Paths.line(startPose, shootingPose).linear(startPose, shootingPose);
     }
 
-    public Path park() {
-        return Paths.curve(parkStart, parkControl1, park).linear(parkStart, park);
+    public Path parkPath() {
+        return Paths.curve(parkStart, parkControl1, parkPose).linear(parkStart, parkPose);
     }
     
-    private Command autoRoutine() {
-        return sequential(
-                follow(follower, shooting1()),
-                follow(follower, park())
-               );
-    }
+private Command autoRoutine() {
+    return sequential(
+            follow(follower, shootingPath()),
+            waitMS(10000),
+            shootingSystem.on,
+            waitMs(2000),
+            ballLoadingServo.advanceHalfTurn,
+            waitMs(1500),
+            ballLoadingServo.advanceHalfTurn,
+            waitMs(1500),
+            shootingSystem.off,
+            follow(follower, parkPath())       
+    );
+}
 
     @Override
     public void init() {
         Scheduler.reset();
+
+        shootingSystem = ShootingSystem.getInstance(telemetry);
+        ballLoadingServo = BallLoadingServo.getInstance(telemetry);
+        intakeSystem = IntakeServo.getInstance(telemetry);
+        intakeFeed = IntakeMotor.getInstance(telemetry);
 
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
