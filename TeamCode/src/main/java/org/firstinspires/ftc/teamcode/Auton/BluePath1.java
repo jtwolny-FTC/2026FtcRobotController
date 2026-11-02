@@ -59,7 +59,12 @@ private Command autoRoutine() {
             ballLoadingServo.advanceHalfTurn,
             waitMs(1500),
             shootingSystem.off,
+            intakeSystem.forward,
+            intakeFeed.forward,
             follow(follower, gardenPath()),
+            waitMs(500),
+            intakeSystem.off,
+            intakeFeed.off,
             follow(follower, parkPath())       
     );
 }
