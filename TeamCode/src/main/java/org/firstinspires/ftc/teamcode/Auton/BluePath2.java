@@ -58,13 +58,13 @@ private Command autoRoutine() {
     return sequential(
             follow(follower, shootingPath()),
             waitMS(10000),
-            action(() -> shootingSystem.start()),
+            shootingSystem.start(),
             waitMs(2000),
-            action(() -> ballLoadingServo.goAdvanceHalfTurn()),
+            ballLoadingServo.goAdvanceHalfTurn(),
             waitMs(1500),
-            action(() -> ballLoadingServo.goAdvanceHalfTurn()),
+            ballLoadingServo.goAdvanceHalfTurn(),
             waitMs(1500),
-            action(() -> shootingSystem.stop()),
+            shootingSystem.stop(),
             follow(follower, parkPath())       
     );
 }
