@@ -64,19 +64,19 @@ public class RedPath1 extends OpMode {
 private Command autoRoutine() {
     return sequential(
             follow(follower, shootingPath()),
-            shootingSystem.start(),
+            instant(() -> shootingSystem.start()),
             waitMs(2000),
-            ballLoadingServo.goAdvanceHalfTurn(),
+            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
             waitMs(1500),
-            ballLoadingServo.goAdvanceHalfTurn(),
+            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
             waitMs(1500),
-            shootingSystem.stop(),
-            intakeSystem.start(),
-            intakeFeed.start(),
+            instant(() -> shootingSystem.stop()),
+            instant(() -> intakeSystem.start()),
+            instant(() -> intakeFeed.start()),
             follow(follower, gardenPath()),
             waitMs(500),
-            intakeSystem.stop(),
-            intakeFeed.stop(),
+            instant(() -> intakeSystem.stop()),
+            instant(() -> intakeFeed.stop()),
             follow(follower, parkPath())       
     );
 }
