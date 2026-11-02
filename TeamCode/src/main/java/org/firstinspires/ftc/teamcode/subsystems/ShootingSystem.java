@@ -61,7 +61,7 @@ public class ShootingSystem implements Subsystem {
         BallLoadingServo.getInstance().stop();
 
     }).requires(this);
-
+    
     public boolean isRunning() {
     return shootingMotor.getPower() > 0.10;
     }
