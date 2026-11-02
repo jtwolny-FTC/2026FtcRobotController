@@ -58,7 +58,7 @@ public class BluePath2 extends OpMode {
 private Command autoRoutine() {
     return sequential(
             follow(follower, shootingPath()),
-            waitMS(10000),
+            waitMs(10000),
             instant(() -> shootingSystem.start()),
             waitMs(2000),
             instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
