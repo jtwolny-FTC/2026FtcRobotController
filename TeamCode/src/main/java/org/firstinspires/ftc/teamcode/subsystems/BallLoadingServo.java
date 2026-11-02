@@ -32,7 +32,7 @@ public class BallLoadingServo implements Subsystem {
     private Telemetry telemetry;
 
     // Adjust this value until the servo rotates 180 degrees
-    private static final long HALF_TURN_TIME_MS = 500;
+    private static final long HALF_TURN_TIME_MS = 650;
 
     // Other variables needed for the Half Turn
     private boolean advancing = false;
