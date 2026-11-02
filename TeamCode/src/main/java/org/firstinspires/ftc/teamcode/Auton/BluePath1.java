@@ -85,6 +85,11 @@ private Command autoRoutine() {
     public void init() {
         Scheduler.reset();
 
+        shootingSystem = ShootingSystem.getInstance(telemetry);
+        ballLoadingServo = BallLoadingServo.getInstance(telemetry);
+        intakeSystem = IntakeServo.getInstance(telemetry);
+        intakeFeed = IntakeMotor.getInstance(telemetry);
+
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
         follower.update();
