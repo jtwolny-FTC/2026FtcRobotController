@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.subsystems.BallLoadingServo;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeServo;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeMotor;
 
-import static com.pedropathing.api.Paths;
+import com.pedropathing.api.Paths;
 import static com.pedropathing.ivy.Scheduler.schedule;
 import static com.pedropathing.ivy.groups.Groups.sequential;
 import static com.pedropathing.ivy.pedro.PedroCommands.follow;
