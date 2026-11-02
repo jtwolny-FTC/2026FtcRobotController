@@ -62,6 +62,10 @@ public class ShootingSystem implements Subsystem {
 
     }).requires(this);
 
+    public boolean isRunning() {
+    return shootingMotor.getPower() > 0.10;
+    }
+    
     /**
      * Toggle shooter on/off.
      */
