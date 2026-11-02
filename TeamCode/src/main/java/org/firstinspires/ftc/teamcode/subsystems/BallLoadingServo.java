@@ -89,10 +89,16 @@ public class BallLoadingServo implements Subsystem {
      * then stop automatically.
      * must set & calibrate half turn time
      */
+    // NextFTC Call for TeleOP
     public final Command advanceHalfTurn = new InstantCommand(() -> {
-        
+    goAdvanceHalfTurn();
+    }).requires(this);
+
+    // Can be Called in Auto
+    public void goAdvanceHalfTurn() {
+
     if (!ShootingSystem.getInstance().isRunning()) {
-    return;
+        return;
     }
     if (!advancing) {
         currentPower = -1.0;
@@ -100,7 +106,7 @@ public class BallLoadingServo implements Subsystem {
         stopTime = System.currentTimeMillis() + HALF_TURN_TIME_MS;
         advancing = true;
         }
-    }).requires(this);
+    }
     
     /**
      * Spins the servo forward (positive direction) at a chosen speed.
