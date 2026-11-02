@@ -64,19 +64,19 @@ public class BluePath1 extends OpMode {
 private Command autoRoutine() {
     return sequential(
             follow(follower, shootingPath()),
-            action(() -> shootingSystem.start()),
+            shootingSystem.start(),
             waitMs(2000),
-            action(() -> ballLoadingServo.goAdvanceHalfTurn()),
+            ballLoadingServo.goAdvanceHalfTurn(),
             waitMs(1500),
-            action(() -> ballLoadingServo.goAdvanceHalfTurn()),
+            ballLoadingServo.goAdvanceHalfTurn(),
             waitMs(1500),
-            action(() -> shootingSystem.stop()),
-            action(() -> intakeSystem.start()),
-            action(() -> intakeFeed.start()),
+            shootingSystem.stop(),
+            intakeSystem.start(),
+            intakeFeed.start(),
             follow(follower, gardenPath()),
             waitMs(500),
-            action(() -> intakeSystem.stop()),
-            action(() -> intakeFeed.stop()),
+            intakeSystem.stop(),
+            intakeFeed.stop(),
             follow(follower, parkPath())       
     );
 }
