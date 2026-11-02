@@ -86,7 +86,7 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
         Gamepads.gamepad2().a()
                 .whenBecomesTrue(shootingSystem.on);
         
-        Gamepads.gamepad2().a()
+        Gamepads.gamepad2().b()
                 .whenBecomesTrue(shootingSystem.off);
 
         Gamepads.gamepad2().leftBumper()
