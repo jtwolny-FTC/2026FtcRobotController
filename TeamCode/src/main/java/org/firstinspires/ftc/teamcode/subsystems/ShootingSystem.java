@@ -23,7 +23,10 @@ public class ShootingSystem implements Subsystem {
     private ShootingSystem(Telemetry telemetry) {
         this.telemetry = telemetry;
     }
-    
+
+    public void start() {
+        shootingMotor.setPower(MID_POWER);
+    }
     public void stop() {
         shootingMotor.setPower(STOP_POWER);
     }
