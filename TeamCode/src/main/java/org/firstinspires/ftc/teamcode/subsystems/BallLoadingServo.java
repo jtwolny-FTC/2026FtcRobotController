@@ -90,8 +90,12 @@ public class BallLoadingServo implements Subsystem {
      * must set & calibrate half turn time
      */
     public final Command advanceHalfTurn = new InstantCommand(() -> {
+        
+    if (!ShootingSystem.getInstance().isRunning()) {
+    return;
+    }
     if (!advancing) {
-        currentPower = 1.0;
+        currentPower = -1.0;
         crServo.setPower(currentPower);
         stopTime = System.currentTimeMillis() + HALF_TURN_TIME_MS;
         advancing = true;
