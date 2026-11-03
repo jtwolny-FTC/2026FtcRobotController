@@ -3,17 +3,22 @@ package org.firstinspires.ftc.teamcode.pedro;
 import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 
 import com.pedropathing.algorithm.Algorithm;
+import com.pedropathing.algorithm.Foresight;
+import com.pedropathing.algorithm.ForesightConfig;
+import com.pedropathing.controllers.Controller;
 import com.pedropathing.drivetrain.DrivePowers;
 import com.pedropathing.drivetrain.Drivetrain;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.localization.MotionState;
+import com.pedropathing.math.Matrix;
 import com.pedropathing.math.Pose;
 import com.pedropathing.math.Vector2D;
 import com.pedropathing.paths.PathTracker;
 import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.drivetrains.MecanumConfig;
 import com.pedropathing.revhub.localizers.Encoder;
+import com.pedropathing.revhub.localizers.PinpointLocalizer;
 import com.pedropathing.revhub.localizers.RevHubIMU;
 import com.pedropathing.revhub.localizers.TwoWheelConfig;
 import com.pedropathing.revhub.localizers.TwoWheelLocalizer;
@@ -41,13 +46,12 @@ public class Constants {
 );
     public static Follower create(HardwareMap h) {
         return new Follower(
-                new PinpointLocalizer(h, localizerConfig),
-                new Mecanum(h, drivetrainConfig),
+                new TwoWheelLocalizer(h, localizerConfig),
+                new Mecanum(h, driveConfig),
                 new Foresight(foresightConfig)
         );
     }
-    );
-    }
+
     public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
         c.xPodName.set("driveWheel");
         c.yPodName.set("strafeWheel");
