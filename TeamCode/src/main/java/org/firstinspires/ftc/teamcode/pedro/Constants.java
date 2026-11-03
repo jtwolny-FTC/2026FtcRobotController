@@ -2,16 +2,28 @@ package org.firstinspires.ftc.teamcode.pedro;
 
 import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 
+import com.pedropathing.algorithm.Algorithm;
+import com.pedropathing.drivetrain.DrivePowers;
+import com.pedropathing.drivetrain.Drivetrain;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.FollowerBuilder;
+import com.pedropathing.localization.MotionState;
+import com.pedropathing.math.Pose;
+import com.pedropathing.math.Vector2D;
+import com.pedropathing.paths.PathTracker;
+import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.drivetrains.MecanumConfig;
 import com.pedropathing.revhub.localizers.Encoder;
 import com.pedropathing.revhub.localizers.RevHubIMU;
 import com.pedropathing.revhub.localizers.TwoWheelConfig;
+import com.pedropathing.revhub.localizers.TwoWheelLocalizer;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Collections;
+import java.util.Map;
 
 public class Constants {
 
@@ -28,10 +40,71 @@ public class Constants {
     }
 );
     public static Follower create(HardwareMap h) {
-    return new FollowerBuilder(h)
-            .drive(driveConfig)
-            .localizer(localizerConfig)
-            .build();
+    return new Follower(
+            new TwoWheelLocalizer(h, localizerConfig),
+            new Mecanum(h, driveConfig),
+            new Algorithm() {
+                @Override
+                public DrivePowers calculatePath(Drivetrain drivetrain, PathTracker pathTracker, MotionState motionState, double v) {
+                    return null;
+                }
+
+                @Override
+                public DrivePowers calculateHold(Drivetrain drivetrain, Pose pose, MotionState motionState, boolean b, double v) {
+                    return null;
+                }
+
+                @Override
+                public double completion() {
+                    return 0;
+                }
+
+                @Override
+                public Pose closestPose() {
+                    return null;
+                }
+
+                @Override
+                public Vector2D closestTangent() {
+                    return null;
+                }
+
+                @Override
+                public Vector2D closestNormal() {
+                    return null;
+                }
+
+                @Override
+                public double curvature() {
+                    return 0;
+                }
+
+                @Override
+                public double remainingDistance() {
+                    return 0;
+                }
+
+                @Override
+                public boolean atParametricEnd() {
+                    return false;
+                }
+
+                @Override
+                public void reset() {
+
+                }
+
+                @Override
+                public boolean isBusy() {
+                    return false;
+                }
+
+                @Override
+                public Map<String, Object> debug() {
+                    return Collections.emptyMap();
+                }
+            }
+    );
     }
     public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
         c.xPodName.set("driveWheel");
