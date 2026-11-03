@@ -5,6 +5,10 @@ import static org.firstinspires.ftc.teamcode.ChassisConstants.*;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.revhub.drivetrains.MecanumConfig;
+import com.pedropathing.revhub.localizers.Encoder;
+import com.pedropathing.revhub.localizers.RevHubIMU;
+import com.pedropathing.revhub.localizers.TwoWheelConfig;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -27,4 +31,19 @@ public class Constants {
         // return new Follower(Drivetrain, Localizer, Foresight);
         return null;
     }
+    public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
+        c.xPodName.set("driveWheel");
+        c.yPodName.set("strafeWheel");
+        c.imuName.set("imu");
+        c.xPodOffset.set(-196.3734840017451);
+        c.yPodOffset.set(-84.67879404622987);
+        c.forwardTicksToInches.set(0.27111088453414384);
+        c.strafeTicksToInches.set(3.040924360449117);
+        c.xPodDirection.set(Encoder.REVERSE);
+        c.yPodDirection.set(Encoder.REVERSE);
+        c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP
+        )));
+    });
 }
