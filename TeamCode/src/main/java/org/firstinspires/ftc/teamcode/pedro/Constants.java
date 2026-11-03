@@ -28,8 +28,10 @@ public class Constants {
     }
 );
     public static Follower create(HardwareMap h) {
-        // return new Follower(Drivetrain, Localizer, Foresight);
-        return null;
+    return new FollowerBuilder(h)
+            .drive(driveConfig)
+            .localizer(localizerConfig)
+            .build();
     }
     public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
         c.xPodName.set("driveWheel");
