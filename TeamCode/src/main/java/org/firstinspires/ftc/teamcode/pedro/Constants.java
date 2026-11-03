@@ -40,80 +40,12 @@ public class Constants {
     }
 );
     public static Follower create(HardwareMap h) {
-    return new Follower(
-            new TwoWheelLocalizer(h, localizerConfig),
-            new Mecanum(h, driveConfig),
-            new Algorithm() {
-    @Override
-    public DrivePowers calculatePath(
-            Drivetrain drivetrain,
-            PathTracker pathTracker,
-            MotionState motionState,
-            double v) {
-
-        return new DrivePowers(0.0, 0.0, 0.0);
+        return new Follower(
+                new PinpointLocalizer(h, localizerConfig),
+                new Mecanum(h, drivetrainConfig),
+                new Foresight(foresightConfig)
+        );
     }
-
-    @Override
-    public DrivePowers calculateHold(
-            Drivetrain drivetrain,
-            Pose pose,
-            MotionState motionState,
-            boolean b,
-            double v) {
-
-        return new DrivePowers(0.0, 0.0, 0.0);
-    }
-
-    @Override
-    public double completion() {
-        return 0;
-    }
-
-    @Override
-    public Pose closestPose() {
-        return Pose.zero();
-    }
-
-    @Override
-    public Vector2D closestTangent() {
-        return Vector2D.zero();
-    }
-
-    @Override
-    public Vector2D closestNormal() {
-        return Vector2D.zero();
-    }
-
-    @Override
-    public double curvature() {
-        return 0;
-    }
-
-    @Override
-    public double remainingDistance() {
-        return 0;
-    }
-
-    @Override
-    public boolean atParametricEnd() {
-        return true;
-    }
-
-    @Override
-    public void reset() {
-    }
-
-    @Override
-    public boolean isBusy() {
-        return false;
-    }
-
-    @Override
-    public Map<String, Object> debug() {
-        return Collections.emptyMap();
-    }
-}
     );
     }
     public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
@@ -131,4 +63,29 @@ public class Constants {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP
         )));
     });
+        public static ForesightConfig foresightConfig = new ForesightConfig(
+            c -> {
+                Controller primaryTranslationalForward = Controller.proportional(0.21673573246597627);
+                Controller secondaryTranslationalForward = Controller.proportional(0.0800780618607471);
+                Controller primaryTranslationalLateral = Controller.proportional(0.9422513238995138);
+                Controller secondaryTranslationalLateral = Controller.proportional(0.3481366867617966);
+
+                c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
+                c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
+
+                c.coast.set(Controller.proportionalFeedforward(0.018666030678729042));
+                c.brake.set(Controller.proportionalFeedforward(0.015866126076919684));
+
+                c.headingFeedback.set(Controller.proportional(3.4459241569791197));
+                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.04333768992120032, 0.010806452497216587));
+
+                c.linearBrakeCoefficients.set(Matrix.diag(0.06199817893378212, 0.050418129135617856));
+                c.quadraticBrakeCoefficients.set(Matrix.diag(0.0017202583013053256, 0.0020499811297467444));
+
+                c.maxAchievableForwardVelocity.set(54.110783579053916);
+                c.maxAchievableStrafeVelocity.set(42.44155458197613);
+                c.naturalForwardDeceleration.set(38.861658978051345);
+                c.naturalStrafeDeceleration.set(58.747237475924365);
+            }
+    );
 }
