@@ -35,12 +35,12 @@ public class Constants {
         c.xPodName.set("driveWheel");
         c.yPodName.set("strafeWheel");
         c.imuName.set("imu");
-        c.xPodOffset.set(-0.9828167691861346);
-        c.yPodOffset.set(-0.8772966838181246);
-        c.forwardTicksToInches.set(0.002097897833883809);
-        c.strafeTicksToInches.set(3.385845985896806);
+        c.xPodOffset.set(0.23790568514519977);
+        c.yPodOffset.set(0.8132518274454786);
+        c.forwardTicksToInches.set(0.001974786185329457);
+        c.strafeTicksToInches.set(0.5936657590860075);
         c.xPodDirection.set(Encoder.REVERSE);
-        c.yPodDirection.set(Encoder.REVERSE);
+        c.yPodDirection.set(Encoder.FORWARD);
         c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP
