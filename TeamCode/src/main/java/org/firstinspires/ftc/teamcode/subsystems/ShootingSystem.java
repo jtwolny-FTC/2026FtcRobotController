@@ -48,7 +48,7 @@ public class ShootingSystem implements Subsystem {
     
     // Power levels for different shooting states
     private static final double LOW_THRESHOLD = 0.25;
-    private static final double MID_POWER = 0.65;
+    private static final double MID_POWER = 0.55;
     private static final double HIGH_POWER = 1.0;
     private static final double STOP_POWER = 0.0;
 
@@ -66,7 +66,7 @@ public class ShootingSystem implements Subsystem {
     }).requires(this);
     
     public boolean isRunning() {
-    return shootingMotor.getPower() > 0.10;
+    return shootingMotor.getPower() > 0.25;
     }
     
     /**
