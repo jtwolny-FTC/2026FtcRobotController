@@ -44,66 +44,76 @@ public class Constants {
             new TwoWheelLocalizer(h, localizerConfig),
             new Mecanum(h, driveConfig),
             new Algorithm() {
-                @Override
-                public DrivePowers calculatePath(Drivetrain drivetrain, PathTracker pathTracker, MotionState motionState, double v) {
-                    return null;
-                }
+    @Override
+    public DrivePowers calculatePath(
+            Drivetrain drivetrain,
+            PathTracker pathTracker,
+            MotionState motionState,
+            double v) {
 
-                @Override
-                public DrivePowers calculateHold(Drivetrain drivetrain, Pose pose, MotionState motionState, boolean b, double v) {
-                    return null;
-                }
+        return new DrivePowers(0.0, 0.0, 0.0);
+    }
 
-                @Override
-                public double completion() {
-                    return 0;
-                }
+    @Override
+    public DrivePowers calculateHold(
+            Drivetrain drivetrain,
+            Pose pose,
+            MotionState motionState,
+            boolean b,
+            double v) {
 
-                @Override
-                public Pose closestPose() {
-                    return null;
-                }
+        return new DrivePowers(0.0, 0.0, 0.0);
+    }
 
-                @Override
-                public Vector2D closestTangent() {
-                    return null;
-                }
+    @Override
+    public double completion() {
+        return 0;
+    }
 
-                @Override
-                public Vector2D closestNormal() {
-                    return null;
-                }
+    @Override
+    public Pose closestPose() {
+        return Pose.zero();
+    }
 
-                @Override
-                public double curvature() {
-                    return 0;
-                }
+    @Override
+    public Vector2D closestTangent() {
+        return Vector2D.zero();
+    }
 
-                @Override
-                public double remainingDistance() {
-                    return 0;
-                }
+    @Override
+    public Vector2D closestNormal() {
+        return Vector2D.zero();
+    }
 
-                @Override
-                public boolean atParametricEnd() {
-                    return false;
-                }
+    @Override
+    public double curvature() {
+        return 0;
+    }
 
-                @Override
-                public void reset() {
+    @Override
+    public double remainingDistance() {
+        return 0;
+    }
 
-                }
+    @Override
+    public boolean atParametricEnd() {
+        return true;
+    }
 
-                @Override
-                public boolean isBusy() {
-                    return false;
-                }
+    @Override
+    public void reset() {
+    }
 
-                @Override
-                public Map<String, Object> debug() {
-                    return Collections.emptyMap();
-                }
-            }
+    @Override
+    public boolean isBusy() {
+        return false;
+    }
+
+    @Override
+    public Map<String, Object> debug() {
+        return Collections.emptyMap();
+    }
+}
     );
     }
     public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
