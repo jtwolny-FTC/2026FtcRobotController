@@ -16,8 +16,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
  * a mecanum drivetrain using three PID loops (X, Y, heading).
  *
  * Uses the same odometry scaling and encoder device names as your SimplifiedOdometryRobot:
- *   - drive encoder device name: "shootL"  (axial/front-back)
- *   - strafe encoder device name: "push"  (lateral/left-right)
+ *   - drive encoder device name: "driveWheel"  (axial/front-back)
+ *   - strafe encoder device name: "strafeWheel"  (lateral/left-right)
  *   - IMU device name: "imu"
  *
  * Wheel motor names: "FLM", "FRM", "RLM", "RRM"
@@ -103,8 +103,8 @@ public class OdometryMecanumDrive {
         leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        driveEncoder = hw.get(DcMotor.class, "push");
-        strafeEncoder = hw.get(DcMotor.class, "intake");
+        driveEncoder = hw.get(DcMotor.class, "driveWheel");
+        strafeEncoder = hw.get(DcMotor.class, "strafeWheel");
 
         imu = hw.get(IMU.class, "imu");
 
