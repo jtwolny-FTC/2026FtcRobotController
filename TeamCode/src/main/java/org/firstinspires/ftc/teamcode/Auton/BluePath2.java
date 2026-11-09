@@ -61,10 +61,8 @@ private Command autoRoutine() {
             waitMs(10000),
             instant(() -> shootingSystem.start()),
             waitMs(2000),
-            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
-            waitMs(1500),
-            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
-            waitMs(1500),
+            instant(() -> ballLoadingServo.funForward()),
+            waitMs(5000),
             instant(() -> shootingSystem.stop()),
             follow(follower, parkPath())       
     );
