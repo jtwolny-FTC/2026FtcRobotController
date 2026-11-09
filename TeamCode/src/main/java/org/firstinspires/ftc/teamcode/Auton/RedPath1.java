@@ -42,12 +42,11 @@ public class RedPath1 extends OpMode {
     // Poses
     private final Pose startPose = poseFactory.of(82.9111, 133.5555, 270);
     private final Pose shootingPose = poseFactory.of(82.8036, 119.8316, 270);
-    private final Pose gardenStart = poseFactory.of(82.8036, 119.8316, 270);
     private final Pose gardenPose = poseFactory.of(134.3023, 133.4371, 270);
     private final Pose gardenControl1 = poseFactory.of(134.2398, 97.3394, 0);
-    private final Pose parkStart = poseFactory.of(134.3023, 133.4371, 270);
     private final Pose parkPose = poseFactory.of(132.3693, 44.1264, 0);
     private final Pose parkControl1 = poseFactory.of(99.5612, 78.5075, 0);
+    private final Pose parkControl2 = poseFactory.of(119.5501, 00.3901, 0));
 
     // Path methods
     public Path shootingPath() {
@@ -55,11 +54,12 @@ public class RedPath1 extends OpMode {
     }
 
     public Path gardenPath() {
-        return Paths.curve(gardenStart, gardenControl1, gardenPose).linear(gardenStart, gardenPose);
+        return Paths.curve(shootingPose, gardenControl1, gardenPose).tangent();
     }
 
     public Path parkPath() {
-        return Paths.curve(parkStart, parkControl1, parkPose).linear(parkStart, parkPose);
+        // return Paths.curve(gardenPose, parkControl1, parkPose).tangent();
+        return Paths.curve(shootingPose, parkControl2, parkPose).tangent();
     }
     
 private Command autoRoutine() {
@@ -67,17 +67,16 @@ private Command autoRoutine() {
             follow(follower, shootingPath()),
             instant(() -> shootingSystem.start()),
             waitMs(2000),
-            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
-            waitMs(1500),
-            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
-            waitMs(1500),
+            instant(() -> ballLoadingServo.funForward()),
+            waitMs(5000),
+            instant(() -> ballLoadingServo.stop()),
             instant(() -> shootingSystem.stop()),
-            instant(() -> intakeSystem.start()),
-            instant(() -> intakeFeed.start()),
-            follow(follower, gardenPath()),
-            waitMs(500),
-            instant(() -> intakeSystem.stop()),
-            instant(() -> intakeFeed.stop()),
+            //instant(() -> intakeSystem.start()),
+           //instant(() -> intakeFeed.start()),
+           //follow(follower, gardenPath()),
+            //waitMs(500),
+            //instant(() -> intakeSystem.stop()),
+            //instant(() -> intakeFeed.stop()),
             follow(follower, parkPath())       
     );
 }
@@ -90,7 +89,7 @@ private Command autoRoutine() {
         ballLoadingServo = BallLoadingServo.getInstance(telemetry);
         intakeSystem = IntakeServo.getInstance(telemetry);
         intakeFeed = IntakeMotor.getInstance(telemetry);
-        
+
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
         follower.update();
