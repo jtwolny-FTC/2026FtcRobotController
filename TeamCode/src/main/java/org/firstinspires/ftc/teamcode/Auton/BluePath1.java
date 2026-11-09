@@ -54,7 +54,7 @@ public class BluePath1 extends OpMode {
     }
 
     public Path gardenPath() {
-        return Paths.curve(shootingPose, gardenControl1, gardenPose).linear(shootingPose, gardenPose);
+        return Paths.curve(shootingPose, gardenControl1, gardenPose).tangent();
     }
 
     public Path parkPath() {
