@@ -52,7 +52,7 @@ public class RedPath2 extends OpMode {
     }
 
     public Path parkPath() {
-        return Paths.curve(parkStart, parkControl1, parkPose).linear(parkStart, parkPose);
+        return Paths.curve(parkStart, parkControl1, parkPose).tangent(parkStart, parkPose);
     }
     
 private Command autoRoutine() {
@@ -61,10 +61,9 @@ private Command autoRoutine() {
             waitMs(10000),
             instant(() -> shootingSystem.start()),
             waitMs(2000),
-            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
-            waitMs(1500),
-            instant(() -> ballLoadingServo.goAdvanceHalfTurn()),
-            waitMs(1500),
+            instant(() -> ballLoadingServo.funForward()),
+            waitMs(5000),
+            instant(() -> ballLoadingServo.stop()),
             instant(() -> shootingSystem.stop()),
             follow(follower, parkPath())       
     );
