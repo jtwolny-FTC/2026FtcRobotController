@@ -97,7 +97,7 @@ public class BallLoadingServo implements Subsystem {
     // Can be Called in Auto
     public void goAdvanceHalfTurn() {
 
-    if (!ShootingSystem.getInstance().isRunning()) {
+    if (!ShootingSystem.getInstance().isAtSpeed()) {
         return;
     }
     if (!advancing) {
@@ -115,7 +115,7 @@ public class BallLoadingServo implements Subsystem {
     public Command runForward(double power) {
 
         return new InstantCommand(() -> {
-        if (!ShootingSystem.getInstance().isRunning()) {
+        if (!ShootingSystem.getInstance().isAtSpeed()) {
             return;
         }
         currentPower = -Math.abs(power);
