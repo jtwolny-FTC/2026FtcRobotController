@@ -48,7 +48,8 @@ public class BallLoadingServo implements Subsystem {
     private BallLoadingServo(Telemetry telemetry) {
         this.telemetry = telemetry;
         crServo = new CRServoEx(SERVO_NM); // Connects to the real servo
-        //crServo.setPower(0.0); // Start stopped (optional)
+        autoFeedEnabled = false;
+        currentPower = 0.0;  // Start with Motor Stopped
     }
 
     /**
