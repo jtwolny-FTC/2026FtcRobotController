@@ -37,6 +37,9 @@ public class BallLoadingServo implements Subsystem {
     // Other variables needed for the Half Turn
     private boolean advancing = false;
     private long stopTime = 0;
+    
+    // Auto Feed Signal - Starts Ball Loader immediately when shooter reaches target velocity
+    private boolean autoFeedEnabled = false;
 
     /**
      * This sets up the servo and telemetry system.
@@ -120,6 +123,7 @@ public class BallLoadingServo implements Subsystem {
         }
         currentPower = -Math.abs(power);
         crServo.setPower(currentPower);
+        autoFeedEnabled = true;    
     }).requires(this);
     }
     
@@ -128,6 +132,7 @@ public class BallLoadingServo implements Subsystem {
      */
     public Command runForward() {
         return runForward(-1.0);
+        autoFeedEnabled = true;
     }
 
     /**
@@ -142,6 +147,7 @@ public class BallLoadingServo implements Subsystem {
      */
     public Command runBackward() {
         return runBackward(1.0);
+        autoFeedEnabled = false;
     }
 
     /**
@@ -149,6 +155,7 @@ public class BallLoadingServo implements Subsystem {
      */
     public Command stopContinuous() {
         return setContinuousPower(0.0);
+        autoFeedEnabled = false;
     }
 
     /**
@@ -156,6 +163,7 @@ public class BallLoadingServo implements Subsystem {
      */
     public void stop() {
         crServo.setPower(0.0);
+        autoFeedEnabled = false;
     }
 
     /**
@@ -165,6 +173,23 @@ public class BallLoadingServo implements Subsystem {
      */
     @Override
     public void periodic() {
+
+        // Auto Feed Enable
+        // Starts/Stops Feeder baseed off Shooter being at speed    
+        if (autoFeedEnabled) {
+            if (ShootingSystem.getInstance().isAtSpeed()) {
+                if (currentPower == 0.0) {
+                    currentPower = -1.0;
+                    crServo.setPower(currentPower);
+                }
+            } else {
+                if (currentPower != 0.0) {
+                    currentPower = 0.0;
+                    crServo.setPower(0.0);
+                }
+            }
+        }
+      
         telemetry.addData("<===== Ball Loading Servo =====>", "");
         telemetry.addData("Power", "%.2f", currentPower);
         telemetry.addData("Half Turn Time (ms)",HALF_TURN_TIME_MS);
