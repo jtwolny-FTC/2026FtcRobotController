@@ -46,7 +46,7 @@ public class BluePath1 extends OpMode {
     private final Pose gardenControl1 = poseFactory.of(134.2398, 97.3394, 0);
     private final Pose parkPose = poseFactory.of(132.3693, 44.1264, 0);
     private final Pose parkControl1 = poseFactory.of(99.5612, 78.5075, 0);
-    private final Pose parkControl2 = poseFactory.of(119.5501, 00.3901, 0));
+    private final Pose parkControl2 = poseFactory.of(119.5501, 00.3901, 0);
 
     // Path methods
     public Path shootingPath() {
@@ -67,7 +67,7 @@ private Command autoRoutine() {
             follow(follower, shootingPath()),
             instant(() -> shootingSystem.start()),
             waitMs(2000),
-            instant(() -> ballLoadingServo.funForward()),
+            instant(() -> ballLoadingServo.runForward()),
             waitMs(5000),
             instant(() -> ballLoadingServo.stop()),
             instant(() -> shootingSystem.stop()),

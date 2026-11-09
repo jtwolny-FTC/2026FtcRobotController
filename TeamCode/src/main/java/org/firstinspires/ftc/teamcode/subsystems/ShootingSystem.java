@@ -79,7 +79,6 @@ public class ShootingSystem implements Subsystem {
     public Command startStop = new InstantCommand(() -> {
         if (shootingMotor.getPower() <= 0.10) {
             shootingMotor.setPower(MID_POWER);
-            shooterStartTime = System.currentTimeMillis();
         } else {
             shootingMotor.setPower(STOP_POWER);
         }
@@ -91,7 +90,6 @@ public class ShootingSystem implements Subsystem {
     public final Command on = new InstantCommand(() -> {
         if (shootingMotor.getPower() < MID_POWER) {
             shootingMotor.setPower(MID_POWER);
-            shooterStartTime = System.currentTimeMillis();
         } 
     }).requires(this);
 
