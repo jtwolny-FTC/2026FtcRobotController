@@ -118,12 +118,9 @@ public class BallLoadingServo implements Subsystem {
     public Command runForward(double power) {
 
         return new InstantCommand(() -> {
-        if (!ShootingSystem.getInstance().isAtSpeed()) {
-            return;
-        }
-        currentPower = -Math.abs(power);
-        crServo.setPower(currentPower);
-        autoFeedEnabled = true;    
+        autoFeedEnabled = true;  
+    //    currentPower = -Math.abs(power);
+    //    crServo.setPower(currentPower);       
     }).requires(this);
     }
     
@@ -131,14 +128,14 @@ public class BallLoadingServo implements Subsystem {
      * Spins the servo forward at full speed.
      */
     public Command runForward() {
-        return runForward(-1.0);
-        autoFeedEnabled = true;
+        return runForward(1.0);
     }
 
     /**
      * Spins the servo backward (negative direction) at a chosen speed.
      */
     public Command runBackward(double power) {
+        autoFeedEnabled = false;
         return setContinuousPower(Math.abs(power));
     }
 
@@ -147,15 +144,14 @@ public class BallLoadingServo implements Subsystem {
      */
     public Command runBackward() {
         return runBackward(1.0);
-        autoFeedEnabled = false;
     }
 
     /**
      * Stops the servo completely (no spinning).
      */
     public Command stopContinuous() {
-        return setContinuousPower(0.0);
         autoFeedEnabled = false;
+        return setContinuousPower(0.0);
     }
 
     /**
@@ -178,15 +174,11 @@ public class BallLoadingServo implements Subsystem {
         // Starts/Stops Feeder baseed off Shooter being at speed    
         if (autoFeedEnabled) {
             if (ShootingSystem.getInstance().isAtSpeed()) {
-                if (currentPower == 0.0) {
                     currentPower = -1.0;
                     crServo.setPower(currentPower);
-                }
             } else {
-                if (currentPower != 0.0) {
                     currentPower = 0.0;
                     crServo.setPower(0.0);
-                }
             }
         }
       
