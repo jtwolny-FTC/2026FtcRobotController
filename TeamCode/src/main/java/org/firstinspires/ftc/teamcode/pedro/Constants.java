@@ -48,18 +48,19 @@ public class Constants {
         return new Follower(
                 new TwoWheelLocalizer(h, localizerConfig),
                 new Mecanum(h, driveConfig),
+
                 new Foresight(foresightConfig)
         );
     }
 
     public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
         c.xPodName.set("driveWheel");
-        c.yPodName.set("strafeWheel");
+        c.yPodName.set("FRM");
         c.imuName.set("imu");
-        c.xPodOffset.set(0.23790568514519977);
-        c.yPodOffset.set(0.8132518274454786);
-        c.forwardTicksToInches.set(0.001974786185329457);
-        c.strafeTicksToInches.set(0.5936657590860075);
+        c.xPodOffset.set(2.687035);
+        c.yPodOffset.set(-2.118223);
+        c.forwardTicksToInches.set(0.002001);
+        c.strafeTicksToInches.set(0.002062);
         c.xPodDirection.set(Encoder.REVERSE);
         c.yPodDirection.set(Encoder.FORWARD);
         c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
