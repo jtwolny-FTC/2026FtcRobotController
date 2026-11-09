@@ -53,6 +53,10 @@ public class ShootingSystem implements Subsystem {
     private static final double STOP_POWER = 0.0;
 
     private static final double SHOOTING_PWR_INCREMENT = 0.05;
+        
+    // Minimum shooting Velocity
+    private static final double MIN_SHOOTER_VELOCITY = 1200.0;
+    private boolean shooterAtSpeed = false;
 
     public Command stopAllSubsystems = new InstantCommand(() -> {
 
@@ -75,6 +79,7 @@ public class ShootingSystem implements Subsystem {
     public Command startStop = new InstantCommand(() -> {
         if (shootingMotor.getPower() <= 0.10) {
             shootingMotor.setPower(MID_POWER);
+            shooterStartTime = System.currentTimeMillis();
         } else {
             shootingMotor.setPower(STOP_POWER);
         }
@@ -86,6 +91,7 @@ public class ShootingSystem implements Subsystem {
     public final Command on = new InstantCommand(() -> {
         if (shootingMotor.getPower() < MID_POWER) {
             shootingMotor.setPower(MID_POWER);
+            shooterStartTime = System.currentTimeMillis();
         } 
     }).requires(this);
 
@@ -143,12 +149,20 @@ public class ShootingSystem implements Subsystem {
         }
 
     }).requires(this);
+    
+    public boolean isAtSpeed() {
+        return shooterAtSpeed;
+    }
 
+    
     @Override
     public void periodic() {
 
+    // Check for shooting system at shooting velocity
+        double velocity = shootingMotor.getVelocity();
+        shooterAtSpeed = shootingMotor.getPower() > 0.1 && velocity >= MIN_SHOOTER_VELOCITY;
+        
         telemetry.addData("<===== Shooting System =====>", "");
-
         telemetry.addData(
                 "Shooter",
                 "Pwr: %.2f | Pos: %.2f | Vel: %.2f",
