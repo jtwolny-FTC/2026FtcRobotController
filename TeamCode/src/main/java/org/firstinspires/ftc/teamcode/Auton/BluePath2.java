@@ -52,7 +52,7 @@ public class BluePath2 extends OpMode {
     }
 
     public Path parkPath() {
-        return Paths.curve(parkStart, parkControl1, parkPose).tangent(parkStart, parkPose);
+        return Paths.curve(parkStart, parkControl1, parkPose).tangent();
     }
     
 private Command autoRoutine() {
