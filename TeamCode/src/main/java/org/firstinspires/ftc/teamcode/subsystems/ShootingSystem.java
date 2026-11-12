@@ -27,6 +27,17 @@ public class ShootingSystem implements Subsystem {
     private static final double SHOOTING_VELOCITY_INCREMENT = 50.0;
 
     /*
+     * Velocity controller constants.
+     *
+     * kF provides the base power needed to maintain the requested velocity.
+     * kP adds or removes power based on velocity error.
+     *
+     * These values are starting points and will need tuning.
+     */
+    private static final double VELOCITY_KF = 0.00045;
+    private static final double VELOCITY_KP = 0.00020;
+
+    /*
      * Percentage of target velocity required before the loader
      * is allowed to feed a ball.
      *
@@ -77,8 +88,6 @@ public class ShootingSystem implements Subsystem {
         shooterRunning = true;
         shooterAtSpeed = false;
         shooterStartTime = System.currentTimeMillis();
-
-        shootingMotor.setVelocity(targetShootingVelocity);
     }
 
     /**
@@ -170,9 +179,6 @@ public class ShootingSystem implements Subsystem {
                 if (shooterRunning) {
                     shooterStartTime =
                             System.currentTimeMillis();
-
-                    shootingMotor.setVelocity(
-                            targetShootingVelocity);
                 }
             }).requires(this);
 
@@ -195,27 +201,67 @@ public class ShootingSystem implements Subsystem {
                 if (shooterRunning) {
                     shooterStartTime =
                             System.currentTimeMillis();
-                    shootingMotor.setVelocity(
-                            targetShootingVelocity);
                 }
             }).requires(this);
+
+    /**
+     * Limit a number to the specified range.
+     */
+    private double clamp(
+            double value,
+            double minimum,
+            double maximum) {
+
+        return Math.max(
+                minimum,
+                Math.min(maximum, value));
+    }
 
     @Override
     public void periodic() {
 
         double currentVelocity =
                 Math.abs(shootingMotor.getVelocity());
+
+        if (shooterRunning) {         
+            // Calculate velocity error.
+            double velocityError =
+                    targetShootingVelocity - currentVelocity;
+            /*
+             * Feedforward estimates the base power required
+             * for the requested velocity.
+             */
+            double feedforwardPower =
+                    targetShootingVelocity * VELOCITY_KF;
+            /*
+             * Proportional correction adds or removes power
+             * based on the current velocity error.
+             */
+            double correctionPower =
+                    velocityError * VELOCITY_KP;
+            double requestedPower =
+                    feedforwardPower + correctionPower;
+            /*
+             * This shooter only operates in one direction,
+             * so power is limited from 0.0 to 1.0.
+             */
+            requestedPower =
+                    clamp(requestedPower, 0.0, 1.0);
+            shootingMotor.setPower(requestedPower);
+
+        } else {
+            shootingMotor.setPower(0.0);
+        }
+
         double minimumReadyVelocity =
                 targetShootingVelocity * AT_SPEED_PERCENT;
         boolean spinUpDelayComplete =
                 System.currentTimeMillis() - shooterStartTime
-                        >= SPIN_UP_DELAY_MS;
-
-        shooterAtSpeed =
+                        >= SPIN_UP_DELAY_MS;        shooterAtSpeed =
                 shooterRunning
                         && spinUpDelayComplete
                         && currentVelocity >= minimumReadyVelocity;
-        
+
         telemetry.addData("<===== Shooting System =====>", "");
         telemetry.addData(
                 "Shooter",
