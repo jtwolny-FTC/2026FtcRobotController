@@ -269,5 +269,6 @@ public class ShootingSystem implements Subsystem {
                 shootingMotor.getPower(),
                 targetShootingVelocity,
                 currentVelocity);
+		update.telemetry;
     }
 }
