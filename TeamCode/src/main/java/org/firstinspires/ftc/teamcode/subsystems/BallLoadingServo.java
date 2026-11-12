@@ -49,7 +49,9 @@ public class BallLoadingServo implements Subsystem {
         this.telemetry = telemetry;
         crServo = new CRServoEx(SERVO_NM); // Connects to the real servo
         autoFeedEnabled = false;
-        currentPower = 0.0;  // Start with Motor Stopped
+        advancing = false;
+        currentPower = 0.0;
+        crServo.setPower(0.0);
     }
 
     /**
@@ -113,15 +115,19 @@ public class BallLoadingServo implements Subsystem {
     }
     
     /**
-     * Spins the servo forward (positive direction) at a chosen speed.
+     * AUTO FEED ENABLE
+     * Enables automatic forward feeding.
+     * The servo itself is controlled from periodic
+     *
+     * Shooter at speed: Loader runs
+     * Shooter below speed: Loader stops
+     * Shooter recovers: Loader automatically starts again
      */
     
     public Command runForward(double power) {
 
         return new InstantCommand(() -> {
-        autoFeedEnabled = true;  
-    //    currentPower = -Math.abs(power);
-    //    crServo.setPower(currentPower);       
+        autoFeedEnabled = true;    
     }).requires(this);
     }
     
@@ -133,11 +139,21 @@ public class BallLoadingServo implements Subsystem {
     }
 
     /**
-     * Spins the servo backward (negative direction) at a chosen speed.
+     * MANUAL REVERSE
+     * Disables auto-feed and runs the loader
+     * in the reverse/manual direction.
      */
     public Command runBackward(double power) {
-        autoFeedEnabled = false;
-        return setContinuousPower(Math.abs(power));
+      //  return setContinuousPower(Math.abs(power));
+        return new InstantCommand(() -> {
+            autoFeedEnabled = false;
+            advancing = false;
+            currentPower = Math.abs(power);
+            currentPower =
+                    Math.max(-1.0,
+                            Math.min(1.0, currentPower));
+            crServo.setPower(currentPower);
+        }).requires(this);
     }
 
     /**
@@ -151,16 +167,22 @@ public class BallLoadingServo implements Subsystem {
      * Stops the servo completely (no spinning).
      */
     public Command stopContinuous() {
-        autoFeedEnabled = false;
-        return setContinuousPower(0.0);
+        return new InstantCommand(() -> {
+            autoFeedEnabled = false;
+            advancing = false;
+            currentPower = 0.0;
+            crServo.setPower(0.0);
+        }).requires(this);
     }
 
     /**
      * Quick stop command that stops it immediately.
      */
     public void stop() {
-        crServo.setPower(0.0);
         autoFeedEnabled = false;
+        advancing = false;
+        currentPower = 0.0;
+        crServo.setPower(0.0);
     }
 
     /**
@@ -173,14 +195,22 @@ public class BallLoadingServo implements Subsystem {
 
         // Auto Feed Enable
         // Starts/Stops Feeder baseed off Shooter being at speed    
-        if (autoFeedEnabled) {
+        if (autoFeedEnabled && !advancing) {
             if (ShootingSystem.getInstance().isAtSpeed()) {
-                    currentPower = -1.0;
-                    crServo.setPower(currentPower);
+                currentPower = -1.0;
+                crServo.setPower(currentPower);
             } else {
-                    currentPower = 0.0;
-                    crServo.setPower(0.0);
+                currentPower = 0.0;
+                crServo.setPower(0.0);
             }
+        }
+
+	// Half-Turn Timer
+        if (advancing &&
+                System.currentTimeMillis() >= stopTime) {
+            currentPower = 0.0;
+            crServo.setPower(0.0);
+            advancing = false;
         }
       
         telemetry.addData("<===== Ball Loading Servo =====>", "");
@@ -192,10 +222,6 @@ public class BallLoadingServo implements Subsystem {
                 currentPower < 0 ? "Backward" : "Stopped";
         // Index Advance Time Reset
         telemetry.addData("Status", status);
-            if (advancing && System.currentTimeMillis() >= stopTime) {
-        currentPower = 0.0;
-        crServo.setPower(0.0);
-        advancing = false;
         }
     }
 }
