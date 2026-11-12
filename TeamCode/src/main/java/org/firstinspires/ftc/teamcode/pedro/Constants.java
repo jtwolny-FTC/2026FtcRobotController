@@ -48,7 +48,6 @@ public class Constants {
         return new Follower(
                 new TwoWheelLocalizer(h, localizerConfig),
                 new Mecanum(h, driveConfig),
-
                 new Foresight(foresightConfig)
         );
     }
