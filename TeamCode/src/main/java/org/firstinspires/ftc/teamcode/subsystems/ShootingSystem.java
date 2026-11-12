@@ -20,17 +20,39 @@ public class ShootingSystem implements Subsystem {
     // Single shooter motor
     private MotorEx shootingMotor = new MotorEx("sm1");
 
+    // Tune these values for our robot
+    private static final double DEFAULT_SHOOTING_VELOCITY = 1100.0;
+    private static final double MIN_SHOOTING_VELOCITY = 800.0;
+    private static final double MAX_SHOOTING_VELOCITY = 1800.0;
+    private static final double SHOOTING_VELOCITY_INCREMENT = 50.0;
+
+    /*
+     * Percentage of target velocity required before the loader
+     * is allowed to feed a ball.
+     *
+     * 0.90 means the measured velocity must be at least 90%
+     * of the selected target velocity.
+     */
+    private static final double AT_SPEED_PERCENT = 0.90;
+
+    /*
+     * Prevents the shooter from being considered ready while
+     * it is initially accelerating.
+     */
+    private static final long SPIN_UP_DELAY_MS = 500;
+
+    private double targetShootingVelocity =
+            DEFAULT_SHOOTING_VELOCITY;
+
+    private boolean shooterAtSpeed = false;
+    private boolean shooterRunning = false;
+
+    private long shooterStartTime = 0;
+
     private ShootingSystem(Telemetry telemetry) {
         this.telemetry = telemetry;
     }
-
-    public void start() {
-        shootingMotor.setPower(MID_POWER);
-    }
-    public void stop() {
-        shootingMotor.setPower(STOP_POWER);
-    }
-    
+   
     public static ShootingSystem getInstance(Telemetry telemetry) {
         if (INSTANCE == null) {
             INSTANCE = new ShootingSystem(telemetry);
@@ -45,129 +67,161 @@ public class ShootingSystem implements Subsystem {
         }
         return INSTANCE;
     }
-    
-    // Power levels for different shooting states
-    private static final double LOW_THRESHOLD = 0.25;
-    private static final double MID_POWER = 0.55;
-    private static final double HIGH_POWER = 1.0;
-    private static final double STOP_POWER = 0.0;
 
-    private static final double SHOOTING_PWR_INCREMENT = 0.05;
-        
-    // Minimum shooting Velocity
-    private static final double MIN_SHOOTER_VELOCITY = 1200.0;
-    private boolean shooterAtSpeed = false;
+    /**
+     * Start the shooter using the currently selected target velocity.
+     * This method can be called from Pedro IVY autonomous using:
+     * instant(() -> shootingSystem.start())
+     */
+    public void start() {
+        shooterRunning = true;
+        shooterAtSpeed = false;
+        shooterStartTime = System.currentTimeMillis();
 
+        shootingMotor.setVelocity(targetShootingVelocity);
+    }
+
+    /**
+     * Stop the shooter.
+     * This method can be called from Pedro IVY autonomous using:
+     * instant(() -> shootingSystem.stop())
+     */
+    public void stop() {
+        shooterRunning = false;
+        shooterAtSpeed = false;
+
+        shootingMotor.setPower(0.0);
+    }
+     /**
+     * Stop the shooter, intake motor, intake servos,
+     * and ball-loading servo.
+     */
     public Command stopAllSubsystems = new InstantCommand(() -> {
 
-        shootingMotor.setPower(STOP_POWER);
-
+        stop();
         // Stop intake and loader
         IntakeMotor.getInstance().stop();
         IntakeServo.getInstance().stop();
         BallLoadingServo.getInstance().stop();
 
     }).requires(this);
-    
+
+    // Returns true when the shooter has been commanded to run
     public boolean isRunning() {
-    return shootingMotor.getPower() > 0.25;
+    return shooterRunning;
     }
-    
-    /**
-     * Toggle shooter on/off.
-     */
-    public Command startStop = new InstantCommand(() -> {
-        if (shootingMotor.getPower() <= 0.10) {
-            shootingMotor.setPower(MID_POWER);
-        } else {
-            shootingMotor.setPower(STOP_POWER);
-        }
-    }).requires(this);
 
-    /**
-     * Turn shooter on
-     */
-    public final Command on = new InstantCommand(() -> {
-        if (shootingMotor.getPower() < MID_POWER) {
-            shootingMotor.setPower(MID_POWER);
-        } 
-    }).requires(this);
-
-    /**
-     * Turn shooter Off
-     */
-    public final Command off = new InstantCommand(() -> {
-        shootingMotor.setPower(STOP_POWER);
-    }).requires(this);
-
-    /**
-     * Toggle between medium and high power.
-     */
-    public Command toggleShootingPower = new InstantCommand(() -> {
-        if (shootingMotor.getPower() <= 0.10
-                || shootingMotor.getPower() >= HIGH_POWER) {
-
-            shootingMotor.setPower(MID_POWER);
-
-        } else {
-
-            shootingMotor.setPower(HIGH_POWER);
-
-        }
-    }).requires(this);
-
-    /**
-     * Increase shooter power.
-     */
-    public Command increaseShootingPower = new InstantCommand(() -> {
-
-        double newShootingPower =
-                shootingMotor.getPower() + SHOOTING_PWR_INCREMENT;
-
-        if (newShootingPower >= HIGH_POWER) {
-            shootingMotor.setPower(HIGH_POWER);
-        } else {
-            shootingMotor.setPower(newShootingPower);
-        }
-
-    }).requires(this);
-
-    /**
-     * Decrease shooter power.
-     */
-    public Command decreaseShootingPower = new InstantCommand(() -> {
-
-        double newShootingPower =
-                shootingMotor.getPower() - SHOOTING_PWR_INCREMENT;
-
-        if (newShootingPower <= LOW_THRESHOLD) {
-            shootingMotor.setPower(LOW_THRESHOLD);
-        } else {
-            shootingMotor.setPower(newShootingPower);
-        }
-
-    }).requires(this);
-    
     public boolean isAtSpeed() {
         return shooterAtSpeed;
     }
-
     
+    //Returns the current target shooter velocity
+    public double getTargetShootingVelocity() {
+        return targetShootingVelocity;
+    }
+
+    //Returns the current measured shooter velocity.
+    public double getCurrentVelocity() {
+        return Math.abs(shootingMotor.getVelocity());
+    }
+
+    /**
+     * TeleOp command: Turn shooter on
+     */
+    public final Command on = 
+	new InstantCommand(this::start)
+                    .requires(this);
+
+    /**
+     * TeleOp command: Turn shooter Off
+     */
+    public final Command off =
+            new InstantCommand(this::stop)
+                    .requires(this);
+
+    /**
+     * Optional TeleOp command: toggle the shooter on or off.
+     */
+    public final Command startStop =
+            new InstantCommand(() -> {
+                if (shooterRunning) {
+                    stop();
+                } else {
+                    start();
+                }
+            }).requires(this);
+
+        /**
+     * Increase target shooter velocity.
+     *
+     * If the shooter is already running, the new velocity
+     * is sent to the motor immediately.
+     */
+    public final Command increaseShootingVelocity =
+            new InstantCommand(() -> {
+                targetShootingVelocity +=
+                        SHOOTING_VELOCITY_INCREMENT;
+                if (targetShootingVelocity >
+                        MAX_SHOOTING_VELOCITY) {
+                    targetShootingVelocity =
+                            MAX_SHOOTING_VELOCITY;
+                }
+                shooterAtSpeed = false;
+                if (shooterRunning) {
+                    shooterStartTime =
+                            System.currentTimeMillis();
+
+                    shootingMotor.setVelocity(
+                            targetShootingVelocity);
+                }
+            }).requires(this);
+
+    /**
+     * Decrease target shooter velocity.
+     *
+     * If the shooter is already running, the new velocity
+     * is sent to the motor immediately.
+     */
+    public final Command decreaseShootingVelocity =
+            new InstantCommand(() -> {
+                targetShootingVelocity -=
+                        SHOOTING_VELOCITY_INCREMENT;
+                if (targetShootingVelocity <
+                        MIN_SHOOTING_VELOCITY) {
+                    targetShootingVelocity =
+                            MIN_SHOOTING_VELOCITY;
+                }
+                shooterAtSpeed = false;
+                if (shooterRunning) {
+                    shooterStartTime =
+                            System.currentTimeMillis();
+                    shootingMotor.setVelocity(
+                            targetShootingVelocity);
+                }
+            }).requires(this);
+
     @Override
     public void periodic() {
 
-    // Check for shooting system at shooting velocity
-        double velocity = shootingMotor.getVelocity();
-        shooterAtSpeed = shootingMotor.getPower() > 0.1 && velocity >= MIN_SHOOTER_VELOCITY;
+        double currentVelocity =
+                Math.abs(shootingMotor.getVelocity());
+        double minimumReadyVelocity =
+                targetShootingVelocity * AT_SPEED_PERCENT;
+        boolean spinUpDelayComplete =
+                System.currentTimeMillis() - shooterStartTime
+                        >= SPIN_UP_DELAY_MS;
+
+        shooterAtSpeed =
+                shooterRunning
+                        && spinUpDelayComplete
+                        && currentVelocity >= minimumReadyVelocity;
         
         telemetry.addData("<===== Shooting System =====>", "");
         telemetry.addData(
                 "Shooter",
-                "Pwr: %.2f | Pos: %.2f | Vel: %.2f",
+                "Pwr: %.2f | Tar: %.2f | Vel: %.2f",
                 shootingMotor.getPower(),
-                shootingMotor.getCurrentPosition(),
-                shootingMotor.getVelocity());
-
-        telemetry.update();
+                targetShootingVelocity,
+                currentVelocity);
     }
 }
