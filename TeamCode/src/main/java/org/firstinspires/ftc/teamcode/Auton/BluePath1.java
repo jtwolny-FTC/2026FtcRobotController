@@ -44,9 +44,9 @@ public class BluePath1 extends OpMode {
     private final Pose shootingPose = poseFactory.of(82.8036, 119.8316, 270);
     private final Pose gardenPose = poseFactory.of(134.3023, 133.4371, 270);
     private final Pose gardenControl1 = poseFactory.of(134.2398, 97.3394, 0);
-    private final Pose parkPose = poseFactory.of(132.3693, 44.1264, 0);
+    private final Pose parkPose = poseFactory.of(132.3693, 44.1264, -90);
     private final Pose parkControl1 = poseFactory.of(99.5612, 78.5075, 0);
-    private final Pose parkControl2 = poseFactory.of(119.5501, 00.3901, 0);
+    private final Pose parkControl2 = poseFactory.of(133.819, 118.5999, 0);
 
     // Path methods
     public Path shootingPath() {
