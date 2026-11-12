@@ -90,6 +90,27 @@ public class Constants {
                 c.maxAchievableStrafeVelocity.set(42.44155458197613);
                 c.naturalForwardDeceleration.set(38.861658978051345);
                 c.naturalStrafeDeceleration.set(58.747237475924365);
+                
+                /* defines how close the robot's progress along the Bezier curve
+                *  must be to 1 before the path segment is considered parametrically complete
+                * Increasing this value allows the path to reach its parametric end earlier
+                */
+                c.parametricTConstraint.set(0.025);
+
+                /* sets the velocity threshold used while correcting at the final Pose. 
+                * This prevents the path from completing when the robot is still moving fast.
+                * The robot's velocity must be lower than the threshold for the velocityConstraint to be met
+                /*    
+                c.velocityConstraint.set(0.1);
+                // sets the maximum allowed distance between the robot's position and the final target position
+                c.translationalConstraint.set(0.1);
+
+                // sets the maximum allowed heading error between the robot's heading and the final target heading
+                c.headingConstraint.set(Math.toRadians(0.4));
+
+                //s ets how long the follower is allowed to correct at the final Pose before the timeout constraint is met
+                c.timeoutConstraint.set(100.0);
+
             }
     );
 }
