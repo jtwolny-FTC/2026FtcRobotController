@@ -120,6 +120,8 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
 
         Gamepads.gamepad2().dpadLeft()
                 .whenBecomesTrue(ballLoadingServo.runBackward());
+        Gamepads.gamepad2().dpadLeft()
+                .whenBecomesFalse(ballLoadingServo.stopContinuous());
 
         Gamepads.gamepad2().dpadRight()
                 .whenBecomesTrue(ballLoadingServo.runForward());
