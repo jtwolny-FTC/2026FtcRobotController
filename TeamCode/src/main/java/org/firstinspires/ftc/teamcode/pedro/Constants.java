@@ -90,6 +90,19 @@ public class Constants {
                 c.maxAchievableStrafeVelocity.set(42.44155458197613);
                 c.naturalForwardDeceleration.set(38.861658978051345);
                 c.naturalStrafeDeceleration.set(58.747237475924365);
+
+                // Higher value brakes less, lower value brakes more    
+                c.brakeAggression.set(0.6);
+                
+                // how much power is used to stop the robot
+                // Higher the value is quicker stopping
+                c.maxBrakingPower.set(0.2);
+
+                c.maxVelocityConstraint.set(20.0); // inches/second
+                c.maxAccelerationConstraint.set(20.0); // inches/second^2
+                c.maxDecelerationConstraint.set(50.0); // inches/second^2
+                // sets speed the robot has to coast down to be at zero
+                c.coastDownToVelocity.set(0.0);
                 
                 /** defines how close the robot's progress along the Bezier curve
                 *  must be to 1 before the path segment is considered parametrically complete
