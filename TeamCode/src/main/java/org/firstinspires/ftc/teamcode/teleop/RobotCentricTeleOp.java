@@ -90,10 +90,10 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
                 .whenBecomesTrue(shootingSystem.off);
 
         Gamepads.gamepad2().leftBumper()
-                .whenBecomesTrue(shootingSystem.decreaseShootingPower);
+                .whenBecomesTrue(shootingSystem.decreaseShootingVelocity);
 
         Gamepads.gamepad2().rightBumper()
-                .whenBecomesTrue(shootingSystem.increaseShootingPower);
+                .whenBecomesTrue(shootingSystem.increaseShootingVelocity);
 
         // Intake Servo Controls
 
