@@ -21,7 +21,7 @@ public class ShootingSystem implements Subsystem {
     private MotorEx shootingMotor = new MotorEx("sm1");
 
     // Tune these values for our robot
-    private static final double DEFAULT_SHOOTING_VELOCITY = 1100.0;
+    private static final double DEFAULT_SHOOTING_VELOCITY = 1180.0;
     private static final double MIN_SHOOTING_VELOCITY = 800.0;
     private static final double MAX_SHOOTING_VELOCITY = 1800.0;
     private static final double SHOOTING_VELOCITY_INCREMENT = 50.0;
@@ -34,7 +34,7 @@ public class ShootingSystem implements Subsystem {
      *
      * These values are starting points and will need tuning.
      */
-    private static final double VELOCITY_KF = 0.00045;
+    private static final double VELOCITY_KF = 0.00038;
     private static final double VELOCITY_KP = 0.00020;
 
     /*
@@ -269,6 +269,6 @@ public class ShootingSystem implements Subsystem {
                 shootingMotor.getPower(),
                 targetShootingVelocity,
                 currentVelocity);
-		update.telemetry;
+		telemetry.update();
     }
 }

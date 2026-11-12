@@ -15,8 +15,8 @@ public class IntakeMotor implements Subsystem {
     // Motor name from Robot Configuration
     private final MotorEx intakeMotor = new MotorEx("intakeMotor");
 
-    private static final double INTAKE_POWER = 0.8;
-    private static final double REVERSE_POWER = -0.8;
+    private static final double INTAKE_POWER = 0.7;
+    private static final double REVERSE_POWER = -0.7;
     private static final double STOP_POWER = 0.0;
 
     private IntakeMotor(Telemetry telemetry) {
