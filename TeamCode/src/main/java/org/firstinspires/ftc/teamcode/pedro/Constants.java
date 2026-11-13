@@ -53,11 +53,11 @@ public class Constants {
 
     public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
         c.name.set("pinpoint");
-        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
-        c.xPodOffset.set(-5.517377477931226);
-        c.yPodOffset.set(-0.7498509865107499);
+        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        c.xPodOffset.set(-.1);
+        c.yPodOffset.set(-2.75);
         c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
-        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
         c.globalDistanceUnit.set(DistanceUnit.INCH);
         c.offsetUnits.set(DistanceUnit.INCH);
     });
@@ -87,37 +87,37 @@ public class Constants {
                 c.naturalStrafeDeceleration.set(58.747237475924365);
 
                 // Higher value brakes less, lower value brakes more    
-                c.brakeAggression.set(0.6);
+                //c.brakeAggression.set(0.6);
                 
                 // how much power is used to stop the robot
                 // Higher the value is quicker stopping
-                c.maxBrakingPower.set(0.2);
+                //c.maxBrakingPower.set(0.2);
 
-                c.maxVelocityConstraint.set(20.0); // inches/second
-                c.maxAccelerationConstraint.set(20.0); // inches/second^2
-                c.maxDecelerationConstraint.set(50.0); // inches/second^2
+                //c.maxVelocityConstraint.set(20.0); // inches/second
+                //c.maxAccelerationConstraint.set(20.0); // inches/second^2
+                //c.maxDecelerationConstraint.set(50.0); // inches/second^2
                 // sets speed the robot has to coast down to be at zero
-                c.coastDownToVelocity.set(0.0);
+                //c.coastDownToVelocity.set(0.0);
                 
                 /** defines how close the robot's progress along the Bezier curve
                 *  must be to 1 before the path segment is considered parametrically complete
                 * Increasing this value allows the path to reach its parametric end earlier
                 */
-                c.parametricTConstraint.set(0.025);
+                //c.parametricTConstraint.set(0.025);
 
                 /** sets the velocity threshold used while correcting at the final Pose. 
                 * This prevents the path from completing when the robot is still moving fast.
                 * The robot's velocity must be lower than the threshold for the velocityConstraint to be met
                 */    
-                c.velocityConstraint.set(0.1);
+                //c.velocityConstraint.set(0.1);
                 // sets the maximum allowed distance between the robot's position and the final target position
-                c.translationalConstraint.set(0.1);
+                //c.translationalConstraint.set(0.1);
 
                 // sets the maximum allowed heading error between the robot's heading and the final target heading
-                c.headingConstraint.set(Math.toRadians(0.4));
+                //c.headingConstraint.set(Math.toRadians(0.4));
 
                 //s ets how long the follower is allowed to correct at the final Pose before the timeout constraint is met
-                c.timeoutConstraint.set(100.0);
+                //c.timeoutConstraint.set(100.0);
 
             }
     );
