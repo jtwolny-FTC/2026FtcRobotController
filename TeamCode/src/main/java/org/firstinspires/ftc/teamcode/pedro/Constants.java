@@ -18,10 +18,9 @@ import com.pedropathing.paths.PathTracker;
 import com.pedropathing.revhub.drivetrains.Mecanum;
 import com.pedropathing.revhub.drivetrains.MecanumConfig;
 import com.pedropathing.revhub.localizers.Encoder;
+import com.pedropathing.revhub.localizers.PinpointConfig;
 import com.pedropathing.revhub.localizers.PinpointLocalizer;
-import com.pedropathing.revhub.localizers.RevHubIMU;
-import com.pedropathing.revhub.localizers.TwoWheelConfig;
-import com.pedropathing.revhub.localizers.TwoWheelLocalizer;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -46,27 +45,23 @@ public class Constants {
 );
     public static Follower create(HardwareMap h) {
         return new Follower(
-                new TwoWheelLocalizer(h, localizerConfig),
+                new PinpointLocalizer(h, localizerConfig),
                 new Mecanum(h, driveConfig),
                 new Foresight(foresightConfig)
         );
     }
 
-    public static TwoWheelConfig localizerConfig = new TwoWheelConfig(c -> {
-        c.xPodName.set("driveWheel");
-        c.yPodName.set("FRM");
-        c.imuName.set("imu");
-        c.xPodOffset.set(2.687035);
-        c.yPodOffset.set(-2.118223);
-        c.forwardTicksToInches.set(0.002001);
-        c.strafeTicksToInches.set(0.002062);
-        c.xPodDirection.set(Encoder.REVERSE);
-        c.yPodDirection.set(Encoder.FORWARD);
-        c.imu.set(new RevHubIMU(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-                RevHubOrientationOnRobot.UsbFacingDirection.UP
-        )));
+    public static PinpointConfig localizerConfig = new PinpointConfig(c -> {
+        c.name.set("pinpoint");
+        c.podType.set(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
+        c.xPodOffset.set(-6.756258987066315);
+        c.yPodOffset.set(-4.201286496139887);
+        c.xPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+        c.yPodDirection.set(GoBildaPinpointDriver.EncoderDirection.REVERSED);
+        c.globalDistanceUnit.set(DistanceUnit.INCH);
+        c.offsetUnits.set(DistanceUnit.INCH);
     });
+    
         public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
                 Controller primaryTranslationalForward = Controller.proportional(0.21673573246597627);
