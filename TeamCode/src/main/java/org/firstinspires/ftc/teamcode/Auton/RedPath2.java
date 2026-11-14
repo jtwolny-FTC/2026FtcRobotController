@@ -60,7 +60,7 @@ private Command autoRoutine() {
             instant(() -> shootingSystem.start()),
             follow(follower, shootingPath()),
             waitMs(10000),
-            instant(() -> ballLoadingServo.runForward()),
+            instant(() -> ballLoadingServo.startAutoFeed()),
             waitMs(5000),
             instant(() -> ballLoadingServo.stop()),
             instant(() -> shootingSystem.stop()),
