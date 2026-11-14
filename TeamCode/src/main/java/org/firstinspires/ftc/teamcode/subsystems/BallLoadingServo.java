@@ -101,6 +101,11 @@ public class BallLoadingServo implements Subsystem {
     }).requires(this);
 
     // Can be Called in Auto
+
+	public void startAutoFeed() {
+    autoFeedEnabled = true;
+	}
+	
     public void goAdvanceHalfTurn() {
 
     if (!ShootingSystem.getInstance().isAtSpeed()) {
