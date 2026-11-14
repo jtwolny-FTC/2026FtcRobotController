@@ -105,6 +105,13 @@ private Command autoRoutine() {
     public void loop() {
         follower.update();
         Scheduler.execute();
+        
+        // Update subsystems
+        shootingSystem.periodic();
+        ballLoadingServo.periodic();
+        intakeSystem.periodic();
+        intakeFeed.periodic();
+        
         // add your other methods needed in the loop here
         telemetry.addData("X", follower.pose().x());
         telemetry.addData("Y", follower.pose().y());
