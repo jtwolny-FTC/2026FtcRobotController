@@ -89,6 +89,7 @@ private Command autoRoutine() {
         shootingSystem = ShootingSystem.getInstance(telemetry);
         ballLoadingServo = BallLoadingServo.getInstance(telemetry);
         intakeSystem = IntakeServo.getInstance(telemetry);
+        intakeSystem.retract();
         intakeFeed = IntakeMotor.getInstance(telemetry);
 
         follower = Constants.create(hardwareMap);
