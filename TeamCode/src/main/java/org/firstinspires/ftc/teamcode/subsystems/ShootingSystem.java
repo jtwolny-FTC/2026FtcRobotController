@@ -110,7 +110,6 @@ public class ShootingSystem implements Subsystem {
         stop();
         // Stop intake and loader
         IntakeMotor.getInstance().stop();
-        IntakeServo.getInstance().stop();
         BallLoadingServo.getInstance().stop();
 
     }).requires(this);
