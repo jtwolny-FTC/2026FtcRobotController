@@ -72,11 +72,11 @@ private Command autoRoutine() {
             waitMs(5000),
             instant(() -> ballLoadingServo.stop()),
             instant(() -> shootingSystem.stop()),
-            //instant(() -> intakeSystem.start()),
+            //instant(() -> intakeSystem.advance()),
            //instant(() -> intakeFeed.start()),
            //follow(follower, gardenPath()),
             //waitMs(500),
-            //instant(() -> intakeSystem.stop()),
+            //instant(() -> intakeSystem.retract()),
             //instant(() -> intakeFeed.stop()),
             follow(follower, parkPath())       
     );
