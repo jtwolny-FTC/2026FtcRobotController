@@ -96,11 +96,11 @@ public class RobotCentricTeleOp extends NextFTCOpMode {
 
         // Intake Servo Controls
 
-        Gamepads.gamepad2().x()
-                .whenBecomesTrue(intakeSystem.advanceCommand);
+        //Gamepads.gamepad2().x()
+       //         .whenBecomesTrue(intakeSystem.advanceCommand);
 
-        Gamepads.gamepad2().x()
-                .whenBecomesFalse(intakeSystem.retractCommand);
+       // Gamepads.gamepad2().x()
+      //         .whenBecomesFalse(intakeSystem.retractCommand);
 
         // NEW Intake Motor Controls
 
