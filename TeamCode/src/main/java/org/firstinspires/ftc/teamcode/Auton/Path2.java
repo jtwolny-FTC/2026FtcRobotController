@@ -40,11 +40,12 @@ public class Path2 extends OpMode {
     private IntakeMotor intakeFeed;
     
     // Poses
+
     private final Pose startPose = poseFactory.of(82.75, 7.75, 90);
-    private final Pose shootingPose = poseFactory.of(82.75, 28.75, 90);
-    private final Pose parkStart = poseFactory.of(82.75, 28.75, 90);
-    private final Pose parkPose = poseFactory.of(133.75, 25.75, 0);
-    private final Pose parkControl1 = poseFactory.of(91.75, 19.75, 0);
+    private final Pose shootingPose = poseFactory.of(82.75, 12.1335, 90);
+    private final Pose parkStart = poseFactory.of(82.75, 12.1335, 90);
+    private final Pose parkPose = poseFactory.of(134.1654, 29.281, 0);
+    private final Pose parkControl1 = poseFactory.of(101.0618, 30.4295, 0);
 
     // Path methods
     public Path shootingPath() {
