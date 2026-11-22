@@ -64,60 +64,60 @@ public class Constants {
     
         public static ForesightConfig foresightConfig = new ForesightConfig(
             c -> {
-                Controller primaryTranslationalForward = Controller.proportional(0.21673573246597627);
-                Controller secondaryTranslationalForward = Controller.proportional(0.0800780618607471);
-                Controller primaryTranslationalLateral = Controller.proportional(0.9422513238995138);
-                Controller secondaryTranslationalLateral = Controller.proportional(0.3481366867617966);
+                Controller primaryTranslationalForward = Controller.proportional(0.2601525030582551);
+                Controller secondaryTranslationalForward = Controller.proportional(0.09611939847711774);
+                Controller primaryTranslationalLateral = Controller.proportional(0.6307822103538508);
+                Controller secondaryTranslationalLateral = Controller.proportional(0.23305717191466777);
 
                 c.forwardTranslational.set(Controller.piecewise(secondaryTranslationalForward).put(2.5, primaryTranslationalForward));
                 c.strafeTranslational.set(Controller.piecewise(secondaryTranslationalLateral).put(2.5, primaryTranslationalLateral));
 
-                c.coast.set(Controller.proportionalFeedforward(0.018666030678729042));
-                c.brake.set(Controller.proportionalFeedforward(0.015866126076919684));
+                c.coast.set(Controller.proportionalFeedforward(0.012321272090418724));
+                c.brake.set(Controller.proportionalFeedforward(0.010473081276855915));
 
-                c.headingFeedback.set(Controller.proportional(3.4459241569791197));
-                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.04333768992120032, 0.010806452497216587));
+                c.headingFeedback.set(Controller.proportional(5.499025264654296));
+                c.headingBrakeCoefficients.set(Vector2D.cartesian(0.05478959521809571, 0.007620147165631636));
 
-                c.linearBrakeCoefficients.set(Matrix.diag(0.06199817893378212, 0.050418129135617856));
-                c.quadraticBrakeCoefficients.set(Matrix.diag(0.0017202583013053256, 0.0020499811297467444));
+                c.linearBrakeCoefficients.set(Matrix.diag(0.062206218976716535, 0.03300833336972359));
+                c.quadraticBrakeCoefficients.set(Matrix.diag(0.0023411707576636064, 0.002361657064701514));
 
-                c.maxAchievableForwardVelocity.set(54.110783579053916);
-                c.maxAchievableStrafeVelocity.set(42.44155458197613);
-                c.naturalForwardDeceleration.set(38.861658978051345);
-                c.naturalStrafeDeceleration.set(58.747237475924365);
+                c.maxAchievableForwardVelocity.set(78.99342289244127);
+                c.maxAchievableStrafeVelocity.set(50.01222162059126);
+                c.naturalForwardDeceleration.set(27.857821704869124);
+                c.naturalStrafeDeceleration.set(75.97391150926322);
 
                 // Higher value brakes less, lower value brakes more    
-                //c.brakeAggression.set(0.6);
+                c.brakeAggression.set(0.6);
                 
                 // how much power is used to stop the robot
                 // Higher the value is quicker stopping
-                //c.maxBrakingPower.set(0.2);
+                c.maxBrakingPower.set(0.2);
 
-                //c.maxVelocityConstraint.set(20.0); // inches/second
-                //c.maxAccelerationConstraint.set(20.0); // inches/second^2
-                //c.maxDecelerationConstraint.set(50.0); // inches/second^2
+                c.maxVelocityConstraint.set(20.0); // inches/second
+                c.maxAccelerationConstraint.set(20.0); // inches/second^2
+                c.maxDecelerationConstraint.set(50.0); // inches/second^2
                 // sets speed the robot has to coast down to be at zero
-                //c.coastDownToVelocity.set(0.0);
+                c.coastDownToVelocity.set(0.0);
                 
                 /** defines how close the robot's progress along the Bezier curve
                 *  must be to 1 before the path segment is considered parametrically complete
                 * Increasing this value allows the path to reach its parametric end earlier
                 */
-                //c.parametricTConstraint.set(0.025);
+                c.parametricTConstraint.set(0.025);
 
                 /** sets the velocity threshold used while correcting at the final Pose. 
                 * This prevents the path from completing when the robot is still moving fast.
                 * The robot's velocity must be lower than the threshold for the velocityConstraint to be met
                 */    
-                //c.velocityConstraint.set(0.1);
+                c.velocityConstraint.set(0.1);
                 // sets the maximum allowed distance between the robot's position and the final target position
-                //c.translationalConstraint.set(0.1);
+                c.translationalConstraint.set(0.1);
 
                 // sets the maximum allowed heading error between the robot's heading and the final target heading
-                //c.headingConstraint.set(Math.toRadians(0.4));
+                c.headingConstraint.set(Math.toRadians(0.4));
 
                 //s ets how long the follower is allowed to correct at the final Pose before the timeout constraint is met
-                //c.timeoutConstraint.set(100.0);
+                c.timeoutConstraint.set(100.0);
 
             }
     );
